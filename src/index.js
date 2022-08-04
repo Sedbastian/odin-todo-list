@@ -1,5 +1,5 @@
 import './style.css';
-import {domCrearNuevoProyecto, domCrearNuevaTarea} from "./dommodule.js";
+import {domCrearProyecto, domCrearTarea} from "./dommodule.js";
 
 const fabricarParaHacer = function (titulo, descripcion, vencimiento, prioridad) {
     const notas = "";
@@ -27,17 +27,13 @@ console.log(primerParaHacer);
 proyectos["Primer proyecto"].paraHaceres[0] = primerParaHacer;
 console.log(proyectos);
 
-function crearNuevoProyecto() {
-    console.log("crearNuevoProyecto");
-    domCrearNuevoProyecto();
+// A esta funcion la termina llamando el eventListener del boton crearProyecto.
+function crearProyecto(titulo, descripcion) {
+    nuevoProyecto(fabricarProyecto(titulo, descripcion));
+    console.log(proyectos);
 };
 
-function crearNuevaTarea() {
-    console.log("crearNuevaTarea");
-    domCrearNuevaTarea();
-};
+document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
+document.querySelector(".tareaNueva").addEventListener("click", domCrearTarea);
 
-document.querySelector(".proyectoNuevo").addEventListener("click", crearNuevoProyecto);
-document.querySelector(".tareaNueva").addEventListener("click", crearNuevaTarea);
-
-
+export {crearProyecto};
