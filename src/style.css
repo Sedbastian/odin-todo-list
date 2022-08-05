@@ -18,6 +18,27 @@
     color: darkblue;
 }
 
+.divFormularioTarea {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    
+
+    padding: 2rem;
+    background-color: yellowgreen;
+    border-style: solid;
+    border-color: black;
+    border-width: 1rem;
+
+    color: darkblue;
+}
+
+
 nav {
     display:flex;
     gap: 2rem;
@@ -28,4 +49,21 @@ nav {
 nav .proyectoElegido {
     background-color: blue;
     color: white;
+}
+
+main .tareaTarjeta {
+    border-style: solid;
+    
+}
+
+main .tareaTarjeta.prioridadAlta {
+    background-color: red;
+}
+
+main .tareaTarjeta.prioridadMediana {
+    background-color: yellow;
+}
+
+main .tareaTarjeta.prioridadBaja {
+    background-color: green;
 }

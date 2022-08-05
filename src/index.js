@@ -19,15 +19,17 @@ const proyectos = {};
 
 nuevoProyecto(fabricarProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial."));
 
-proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Solo una prueba", "7/7", "mediana");
-proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Segunda prueba", "8/8", "baja");
+proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", "8/8", "Alta");
+proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", "7/7", "Mediana");
+proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", "8/8", "Baja");
+
 
 domNavProyectos();
 
 // A esta funcion la termina llamando el eventListener del boton crearProyecto.
 function crearProyecto(titulo, descripcion) {
     nuevoProyecto(fabricarProyecto(titulo, descripcion));
-    domNavProyectos();
+    domNavProyectos(titulo);
 };
 
 // A esta funcion la termina llamando el eventListener del boton crearTarea.

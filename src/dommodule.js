@@ -6,6 +6,7 @@ function domCrearProyecto() {
         const descripcion = `${inputDescripcion.value}`;
         crearProyecto(titulo, descripcion);
         cuerpi.removeChild(divFormulario);
+        domMostrarTareas(titulo);
     };
 
     function cancelarFormulario() {
@@ -55,14 +56,14 @@ function domCrearProyecto() {
     cuerpi.appendChild(divFormulario);
 };
 
-function domCrearTarea(proyecto) {
+function domCrearTarea(proyectoElegido) {
     function llamarCrearTarea() {
         const titulo = `${inputTitulo.value}`;
         const descripcion = `${inputDescripcion.value}`;
         
-        crearTarea(titulo, descripcion, proyecto);
+        crearTarea(titulo, descripcion, proyectoElegido);
         cuerpi.removeChild(divFormulario);
-        domMostrarTareas(proyecto);
+        domMostrarTareas(proyectoElegido);
     };
 
     function cancelarFormulario() {
@@ -112,37 +113,42 @@ function domCrearTarea(proyecto) {
     cuerpi.appendChild(divFormulario);
 };
 
-function domMostrarTareas(proyecto) {
+function domMostrarTareas(proyectoElegido) {
     function llamarCrearTarea() {
-        domCrearTarea(proyecto);
+        domCrearTarea(proyectoElegido);
     }
     
     const mainAborrar = document.querySelector("main");
     mainAborrar.remove();
+    const main = document.createElement("main");
+
+    const descripcionProyecto = document.createElement("h2");
+    descripcionProyecto.textContent = proyectos[proyectoElegido].descripcion;
+    main.appendChild(descripcionProyecto);
 
     const botonCrearTarea = document.createElement("button");
     botonCrearTarea.textContent = "Agregar Tarea Nueva";
     botonCrearTarea.addEventListener("click", llamarCrearTarea);
-
-    const main = document.createElement("main");
     main.appendChild(botonCrearTarea);
         
-    proyectos[proyecto].tareas.forEach(tarea => {
+    proyectos[proyectoElegido].tareas.forEach(tarea => {
         const tareaTarjeta = document.createElement("div");
         tareaTarjeta.classList.add("tareaTarjeta");
+        if (tarea.prioridad === "Alta") {
+            tareaTarjeta.classList.add("prioridadAlta");
+        } else if (tarea.prioridad === "Mediana") {
+            tareaTarjeta.classList.add("prioridadMediana");
+        } else if (tarea.prioridad === "Baja") {
+            tareaTarjeta.classList.add("prioridadBaja");
+        };
 
         const tituloH3 = document.createElement("h3");
         tituloH3.textContent = tarea.titulo;
-        const prioridad = document.createElement("div");
-        prioridad.textContent = `Prioridad: ${tarea.prioridad}`; 
-        const descripcion = document.createElement("div");
-        descripcion.textContent = `${tarea.descripcion}`;
+        
         const vencimiento = document.createElement("div");
         vencimiento.textContent = `Vencimiento: ${tarea.vencimiento}`;
         
         tareaTarjeta.appendChild(tituloH3);
-        tareaTarjeta.appendChild(prioridad);
-        tareaTarjeta.appendChild(descripcion);
         tareaTarjeta.appendChild(vencimiento);   
 
         main.appendChild(tareaTarjeta);        
@@ -153,13 +159,13 @@ function domMostrarTareas(proyecto) {
     const proyectosListado = document.querySelectorAll(".proyectoNav")
     proyectosListado.forEach(unProyecto=>unProyecto.classList.remove("proyectoElegido"))
     proyectosListado.forEach(unProyecto=>{
-        if(unProyecto.textContent === proyecto) {
+        if(unProyecto.textContent === proyectoElegido) {
             unProyecto.classList.add("proyectoElegido");
         };
     })
 };
 
-function domNavProyectos() {
+function domNavProyectos(proyectoElegido) {
     function llamarMostrarTareas(event) {
         const proyectoAmostrarTareas = event.target.textContent;
         domMostrarTareas(proyectoAmostrarTareas);
@@ -173,6 +179,9 @@ function domNavProyectos() {
     for (const key of Object.keys(proyectos)) {  
         const proyecto = document.createElement("div");
         proyecto.classList.add("proyectoNav");
+        if (proyectos[key].titulo === proyectoElegido) {
+            proyecto.classList.add("proyectoElegido");
+        }
         proyecto.textContent = proyectos[key].titulo;
         proyecto.addEventListener("click", llamarMostrarTareas);
         nav.appendChild(proyecto);
