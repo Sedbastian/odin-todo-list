@@ -55,13 +55,14 @@ function domCrearProyecto() {
     cuerpi.appendChild(divFormulario);
 };
 
-function domCrearTarea() {
+function domCrearTarea(proyecto) {
     function llamarCrearTarea() {
         const titulo = `${inputTitulo.value}`;
         const descripcion = `${inputDescripcion.value}`;
-        const proyecto = `${inputProyecto.value}`;
+        
         crearTarea(titulo, descripcion, proyecto);
         cuerpi.removeChild(divFormulario);
+        domMostrarTareas(proyecto);
     };
 
     function cancelarFormulario() {
@@ -95,16 +96,6 @@ function domCrearTarea() {
     inputDescripcion.setAttribute("id", "descripcion");
     divFormulario.appendChild(inputDescripcion);
 
-    const labelProyecto =  document.createElement("label");
-    labelProyecto.setAttribute("for", "proyecto");
-    labelProyecto.textContent = "Proyecto al que pertenece:";
-    divFormulario.appendChild(labelProyecto);
-
-    const inputProyecto = document.createElement("input");
-    inputProyecto.setAttribute("type", "text");
-    inputProyecto.setAttribute("id", "proyecto");
-    divFormulario.appendChild(inputProyecto);
-
     const botonCrear = document.createElement("button");
     botonCrear.addEventListener("click", llamarCrearTarea);
     botonCrear.setAttribute("class", "botonFormulario");
@@ -121,13 +112,22 @@ function domCrearTarea() {
     cuerpi.appendChild(divFormulario);
 };
 
-function domMostrarTareas(event) {
+function domMostrarTareas(proyecto) {
+    function llamarCrearTarea() {
+        domCrearTarea(proyecto);
+    }
+    
     const mainAborrar = document.querySelector("main");
     mainAborrar.remove();
 
+    const botonCrearTarea = document.createElement("button");
+    botonCrearTarea.textContent = "Agregar Tarea Nueva";
+    botonCrearTarea.addEventListener("click", llamarCrearTarea);
+
     const main = document.createElement("main");
-    
-    proyectos[event.target.textContent].tareas.forEach(tarea => {
+    main.appendChild(botonCrearTarea);
+        
+    proyectos[proyecto].tareas.forEach(tarea => {
         const tareaTarjeta = document.createElement("div");
         tareaTarjeta.classList.add("tareaTarjeta");
 
@@ -150,12 +150,21 @@ function domMostrarTareas(event) {
 
     const cuerpi = document.querySelector("body");
     cuerpi.appendChild(main);
-    const proyectosAdesElegir = document.querySelectorAll(".proyectoNav")
-    proyectosAdesElegir.forEach(proyecto=>proyecto.classList.remove("proyectoElegido"))
-    event.target.classList.add("proyectoElegido");
+    const proyectosListado = document.querySelectorAll(".proyectoNav")
+    proyectosListado.forEach(unProyecto=>unProyecto.classList.remove("proyectoElegido"))
+    proyectosListado.forEach(unProyecto=>{
+        if(unProyecto.textContent === proyecto) {
+            unProyecto.classList.add("proyectoElegido");
+        };
+    })
 };
 
 function domNavProyectos() {
+    function llamarMostrarTareas(event) {
+        const proyectoAmostrarTareas = event.target.textContent;
+        domMostrarTareas(proyectoAmostrarTareas);
+    };
+
     const proyectosAborrar = document.querySelectorAll(".proyectoNav");
     proyectosAborrar.forEach(proyecto => proyecto.remove());
 
@@ -165,7 +174,7 @@ function domNavProyectos() {
         const proyecto = document.createElement("div");
         proyecto.classList.add("proyectoNav");
         proyecto.textContent = proyectos[key].titulo;
-        proyecto.addEventListener("click", domMostrarTareas);
+        proyecto.addEventListener("click", llamarMostrarTareas);
         nav.appendChild(proyecto);
     }
 };

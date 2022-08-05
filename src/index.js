@@ -37,6 +37,5 @@ function crearTarea(titulo, descripcion, proyecto) {
 };
 
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
-document.querySelector(".tareaNueva").addEventListener("click", domCrearTarea);
 
 export {crearProyecto, crearTarea, proyectos};
