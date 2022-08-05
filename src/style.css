@@ -3,4 +3,17 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
+
+    padding: 2rem;
+    background-color: yellowgreen;
+    border-style: solid;
+    border-color: black;
+    border-width: 1rem;
+
+    color: darkblue;
 }

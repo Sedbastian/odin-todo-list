@@ -1,30 +1,27 @@
 import './style.css';
 import {domCrearProyecto, domCrearTarea} from "./dommodule.js";
 
-const fabricarParaHacer = function (titulo, descripcion, vencimiento, prioridad) {
-    const notas = "";
-    const checklist = {};
-    return {titulo, descripcion, vencimiento, prioridad, notas, checklist};
+function fabricarProyecto (titulo, descripcion) {
+    const tareas = [];
+    const fabricarTarea = function (titulo, descripcion, vencimiento, prioridad) {
+        const notas = "";
+        const checklist = {};
+        tareas.push({titulo, descripcion, vencimiento, prioridad, notas, checklist});
+    };
+    return {titulo, descripcion, tareas, fabricarTarea};
 };
-
-const fabricarProyecto = function (titulo, descripcion) {
-    const paraHaceres = [];
-    return {titulo, descripcion, paraHaceres};
-};
-
-const proyectos = {};
 
 function nuevoProyecto (proyecto) {
     proyectos[proyecto.titulo] = proyecto;
 };
 
-nuevoProyecto(fabricarProyecto("Primer proyecto", "Solo es una prueba"));
-console.log(proyectos);
+const proyectos = {};
 
-const primerParaHacer = fabricarParaHacer("Primer ParaHacer", "Solo una prueba", "7/7", "mediana");
-console.log(primerParaHacer);
+nuevoProyecto(fabricarProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial."));
 
-proyectos["Primer proyecto"].paraHaceres[0] = primerParaHacer;
+proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Solo una prueba", "7/7", "mediana");
+proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Segunda prueba", 8/8, "baja");
+
 console.log(proyectos);
 
 // A esta funcion la termina llamando el eventListener del boton crearProyecto.

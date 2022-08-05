@@ -5,6 +5,7 @@ function domCrearProyecto() {
         const titulo = `${inputTitulo.value}`;
         const descripcion = `${inputDescripcion.value}`;
         crearProyecto(titulo, descripcion);
+        cuerpi.removeChild(divFormulario);
     };
 
     function cancelarFormulario() {
@@ -29,7 +30,7 @@ function domCrearProyecto() {
 
     const labelDescripcion =  document.createElement("label");
     labelDescripcion.setAttribute("for", "descripcion");
-    labelDescripcion.textContent = "descripcion:";
+    labelDescripcion.textContent = "Descripcion:";
     divFormulario.appendChild(labelDescripcion);
 
     const inputDescripcion = document.createElement("input");
