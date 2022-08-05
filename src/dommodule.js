@@ -121,16 +121,51 @@ function domCrearTarea() {
     cuerpi.appendChild(divFormulario);
 };
 
+function domMostrarTareas(event) {
+    const mainAborrar = document.querySelector("main");
+    mainAborrar.remove();
+
+    const main = document.createElement("main");
+    
+    proyectos[event.target.textContent].tareas.forEach(tarea => {
+        const tareaTarjeta = document.createElement("div");
+        tareaTarjeta.classList.add("tareaTarjeta");
+
+        const tituloH3 = document.createElement("h3");
+        tituloH3.textContent = tarea.titulo;
+        const prioridad = document.createElement("div");
+        prioridad.textContent = `Prioridad: ${tarea.prioridad}`; 
+        const descripcion = document.createElement("div");
+        descripcion.textContent = `${tarea.descripcion}`;
+        const vencimiento = document.createElement("div");
+        vencimiento.textContent = `Vencimiento: ${tarea.vencimiento}`;
+        
+        tareaTarjeta.appendChild(tituloH3);
+        tareaTarjeta.appendChild(prioridad);
+        tareaTarjeta.appendChild(descripcion);
+        tareaTarjeta.appendChild(vencimiento);   
+
+        main.appendChild(tareaTarjeta);        
+    });
+
+    const cuerpi = document.querySelector("body");
+    cuerpi.appendChild(main);
+    const proyectosAdesElegir = document.querySelectorAll(".proyectoNav")
+    proyectosAdesElegir.forEach(proyecto=>proyecto.classList.remove("proyectoElegido"))
+    event.target.classList.add("proyectoElegido");
+};
+
 function domNavProyectos() {
     const proyectosAborrar = document.querySelectorAll(".proyectoNav");
     proyectosAborrar.forEach(proyecto => proyecto.remove());
 
-    const nav = document.querySelector(".proyectosNav");
-    
+    const nav = document.querySelector("nav");
+
     for (const key of Object.keys(proyectos)) {  
         const proyecto = document.createElement("div");
-        proyecto.classList.add("proyectoNav")
+        proyecto.classList.add("proyectoNav");
         proyecto.textContent = proyectos[key].titulo;
+        proyecto.addEventListener("click", domMostrarTareas);
         nav.appendChild(proyecto);
     }
 };
