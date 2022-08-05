@@ -1,5 +1,5 @@
 import './style.css';
-import {domCrearProyecto, domCrearTarea} from "./dommodule.js";
+import {domCrearProyecto, domCrearTarea, domNavProyectos} from "./dommodule.js";
 
 function fabricarProyecto (titulo, descripcion) {
     const tareas = [];
@@ -22,12 +22,12 @@ nuevoProyecto(fabricarProyecto("Tareas Sueltas", "Estas son Tareas que no están
 proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Solo una prueba", "7/7", "mediana");
 proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Segunda prueba", "8/8", "baja");
 
-console.log(proyectos);
+domNavProyectos();
 
 // A esta funcion la termina llamando el eventListener del boton crearProyecto.
 function crearProyecto(titulo, descripcion) {
     nuevoProyecto(fabricarProyecto(titulo, descripcion));
-    console.log(proyectos);
+    domNavProyectos();
 };
 
 // A esta funcion la termina llamando el eventListener del boton crearTarea.
@@ -39,4 +39,4 @@ function crearTarea(titulo, descripcion, proyecto) {
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
 document.querySelector(".tareaNueva").addEventListener("click", domCrearTarea);
 
-export {crearProyecto, crearTarea};
+export {crearProyecto, crearTarea, proyectos};

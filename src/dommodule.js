@@ -1,4 +1,4 @@
-import {crearProyecto, crearTarea} from "./index.js";
+import {crearProyecto, crearTarea, proyectos} from "./index.js";
 
 function domCrearProyecto() {
     function llamarCrearProyecto() {
@@ -17,7 +17,7 @@ function domCrearProyecto() {
 
     const crearNuevoProyecto = document.createElement("h2");
     crearNuevoProyecto.textContent = "Crear Nuevo Proyecto";
-    divFormulario.appendChild(crearNuevaTarea);
+    divFormulario.appendChild(crearNuevoProyecto);
 
     const labelTitulo =  document.createElement("label");
     labelTitulo.setAttribute("for", "titulo");
@@ -121,7 +121,22 @@ function domCrearTarea() {
     cuerpi.appendChild(divFormulario);
 };
 
+function domNavProyectos() {
+    const proyectosAborrar = document.querySelectorAll(".proyectoNav");
+    proyectosAborrar.forEach(proyecto => proyecto.remove());
+
+    const nav = document.querySelector(".proyectosNav");
+    
+    for (const key of Object.keys(proyectos)) {  
+        const proyecto = document.createElement("div");
+        proyecto.classList.add("proyectoNav")
+        proyecto.textContent = proyectos[key].titulo;
+        nav.appendChild(proyecto);
+    }
+};
+
 export {
     domCrearProyecto,
-    domCrearTarea
+    domCrearTarea,
+    domNavProyectos
 };
