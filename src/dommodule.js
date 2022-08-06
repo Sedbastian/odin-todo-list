@@ -113,10 +113,19 @@ function domCrearTarea(proyectoElegido) {
     cuerpi.appendChild(divFormulario);
 };
 
+function domVerEditar() {
+    const numeroTarea = event.target.getAttribute("data-tarea");
+    const tareaTarjeta = document.querySelector(`#tarea${numeroTarea}`);
+
+    tareaTarjeta.querySelector("button").remove();
+
+    
+};
+
 function domMostrarTareas(proyectoElegido) {
     function llamarCrearTarea() {
         domCrearTarea(proyectoElegido);
-    }
+    };
     
     const mainAborrar = document.querySelector("main");
     mainAborrar.remove();
@@ -131,28 +140,35 @@ function domMostrarTareas(proyectoElegido) {
     botonCrearTarea.addEventListener("click", llamarCrearTarea);
     main.appendChild(botonCrearTarea);
         
-    proyectos[proyectoElegido].tareas.forEach(tarea => {
+    for(let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
         const tareaTarjeta = document.createElement("div");
+        tareaTarjeta.setAttribute("id", `tarea${i}`);
         tareaTarjeta.classList.add("tareaTarjeta");
-        if (tarea.prioridad === "Alta") {
+        
+        if (proyectos[proyectoElegido].tareas[i].prioridad === "Alta") {
             tareaTarjeta.classList.add("prioridadAlta");
-        } else if (tarea.prioridad === "Mediana") {
+        } else if (proyectos[proyectoElegido].tareas[i].prioridad === "Mediana") {
             tareaTarjeta.classList.add("prioridadMediana");
-        } else if (tarea.prioridad === "Baja") {
+        } else if (proyectos[proyectoElegido].tareas[i].prioridad === "Baja") {
             tareaTarjeta.classList.add("prioridadBaja");
         };
 
         const tituloH3 = document.createElement("h3");
-        tituloH3.textContent = tarea.titulo;
+        tituloH3.textContent = proyectos[proyectoElegido].tareas[i].titulo;
         
         const vencimiento = document.createElement("div");
-        vencimiento.textContent = `Vencimiento: ${tarea.vencimiento}`;
-        
+        vencimiento.textContent = `Vencimiento: ${proyectos[proyectoElegido].tareas[i].vencimiento}`;
+
+        const botonVerEditar = document.createElement("button");
+        botonVerEditar.setAttribute("data-tarea", `${i}`);
+        botonVerEditar.textContent = "Ver detalles / Editar";
+        botonVerEditar.addEventListener("click", domVerEditar);
+
         tareaTarjeta.appendChild(tituloH3);
         tareaTarjeta.appendChild(vencimiento);   
-
+        tareaTarjeta.appendChild(botonVerEditar);
         main.appendChild(tareaTarjeta);        
-    });
+    };
 
     const cuerpi = document.querySelector("body");
     cuerpi.appendChild(main);

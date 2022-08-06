@@ -1,3 +1,16 @@
+/* NAV */
+nav {
+    display:flex;
+    gap: 2rem;
+    padding: 2rem;
+    font-size: 2rem;
+}
+
+nav .proyectoElegido {
+    background-color: blue;
+    color: white;
+}
+
 .divFormularioProyecto {
     position: fixed;
     left: 50%;
@@ -16,6 +29,10 @@
     border-width: 1rem;
 
     color: darkblue;
+}
+
+main {
+    border-style: solid;
 }
 
 .divFormularioTarea {
@@ -38,22 +55,9 @@
     color: darkblue;
 }
 
-
-nav {
-    display:flex;
-    gap: 2rem;
-    padding: 2rem;
-    font-size: 2rem;
-}
-
-nav .proyectoElegido {
-    background-color: blue;
-    color: white;
-}
-
+/* MAIN */
 main .tareaTarjeta {
     border-style: solid;
-    
 }
 
 main .tareaTarjeta.prioridadAlta {

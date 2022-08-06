@@ -23,7 +23,6 @@ proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", "8/
 proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", "7/7", "Mediana");
 proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", "8/8", "Baja");
 
-
 domNavProyectos();
 
 // A esta funcion la termina llamando el eventListener del boton crearProyecto.
