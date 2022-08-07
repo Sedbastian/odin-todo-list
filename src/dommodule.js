@@ -1,4 +1,4 @@
-import {crearProyecto, crearTarea, proyectos} from "./index.js";
+import {proyectos, crearProyecto, crearTarea, actualizarTarea} from "./index.js";
 
 function domCrearProyecto() {
     function llamarCrearProyecto() {
@@ -57,63 +57,13 @@ function domCrearProyecto() {
 };
 
 function domCrearTarea(proyectoElegido) {
-    function llamarCrearTarea() {
-        const titulo = `${inputTitulo.value}`;
-        const descripcion = `${inputDescripcion.value}`;
-        
-        crearTarea(proyectoElegido, titulo, descripcion, "", "", "", "");
-        cuerpi.removeChild(divFormulario);
+        const numeroTarea = proyectos[proyectoElegido].tareas.length;
+        proyectos[proyectoElegido].fabricarTarea("", "", "", "", "", "");
         domMostrarTareas(proyectoElegido);
-    };
-
-    function cancelarFormulario() {
-        cuerpi.removeChild(divFormulario);
-    }
-
-    const divFormulario = document.createElement("div");
-    divFormulario.classList.add("divFormularioTarea");
-
-    const crearNuevaTarea = document.createElement("h2");
-    crearNuevaTarea.textContent = "Crear Nueva Tarea";
-    divFormulario.appendChild(crearNuevaTarea);
-
-    const labelTitulo =  document.createElement("label");
-    labelTitulo.setAttribute("for", "titulo");
-    labelTitulo.textContent = "Titulo:";
-    divFormulario.appendChild(labelTitulo);
-
-    const inputTitulo = document.createElement("input");
-    inputTitulo.setAttribute("type", "text");
-    inputTitulo.setAttribute("id", "titulo");
-    divFormulario.appendChild(inputTitulo);
-
-    const labelDescripcion =  document.createElement("label");
-    labelDescripcion.setAttribute("for", "descripcion");
-    labelDescripcion.textContent = "Descripcion:";
-    divFormulario.appendChild(labelDescripcion);
-
-    const inputDescripcion = document.createElement("input");
-    inputDescripcion.setAttribute("type", "text");
-    inputDescripcion.setAttribute("id", "descripcion");
-    divFormulario.appendChild(inputDescripcion);
-
-    const botonCrear = document.createElement("button");
-    botonCrear.addEventListener("click", llamarCrearTarea);
-    botonCrear.setAttribute("class", "botonFormulario");
-    botonCrear.textContent = "Crear Tarea";
-    divFormulario.appendChild(botonCrear);
-
-    const botonCancelar = document.createElement("button");
-    botonCancelar.addEventListener("click", cancelarFormulario);
-    botonCancelar.setAttribute("class", "botonFormulario");
-    botonCancelar.textContent = "Cancelar";
-    divFormulario.appendChild(botonCancelar);
-
-    const cuerpi = document.querySelector("body");
-    cuerpi.appendChild(divFormulario);
+        domVerEditar(proyectoElegido, numeroTarea);
 };
 
-function domVerEditar() {
+function domVerEditar(tituloProyecto, numeroTarea) {
     function llamarGuardarCambios() {
         const checklistA = "";
         let prioridad;
@@ -124,12 +74,10 @@ function domVerEditar() {
         } else if (inputRadioBaja.checked) {
             prioridad = "Baja";
         };
-        crearTarea(tituloProyecto, inputTitulo.value, textAreaDescripcion.value, inputDateVencimiento.value, prioridad, textAreaNotas.value, checklistA);
+        actualizarTarea(tituloProyecto, numeroTarea, inputTitulo.value, textAreaDescripcion.value, inputDateVencimiento.value, prioridad, textAreaNotas.value, checklistA);
         domMostrarTareas(tituloProyecto);
     };
 
-    const tituloProyecto = event.target.getAttribute("data-proyecto");
-    const numeroTarea = event.target.getAttribute("data-tarea");
     const tarjetaAeditar = document.querySelector(`#tarea${numeroTarea}`);
 
     tarjetaAeditar.querySelectorAll("*").forEach(elemento=>elemento.remove())
@@ -246,6 +194,12 @@ function domMostrarTareas(proyectoElegido) {
     function llamarCrearTarea() {
         domCrearTarea(proyectoElegido);
     };
+
+    function llamarVerEditar(event) {
+        const tituloProyecto = event.target.getAttribute("data-proyecto");
+        const numeroTarea = event.target.getAttribute("data-tarea");
+        domVerEditar(tituloProyecto, numeroTarea);
+    };
     
     const mainAborrar = document.querySelector("main");
     mainAborrar.remove();
@@ -284,8 +238,9 @@ function domMostrarTareas(proyectoElegido) {
         const botonVerEditar = document.createElement("button");
         botonVerEditar.setAttribute("data-proyecto", `${proyectoElegido}`)
         botonVerEditar.setAttribute("data-tarea", `${i}`);
+        botonVerEditar.setAttribute("id", `tarea${i}`);
         botonVerEditar.textContent = "Ver detalles / Editar";
-        botonVerEditar.addEventListener("click", domVerEditar);
+        botonVerEditar.addEventListener("click", llamarVerEditar);
 
         tareaTarjeta.appendChild(tituloH3);
         tareaTarjeta.appendChild(vencimiento);   

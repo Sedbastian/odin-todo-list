@@ -36,6 +36,15 @@ function crearTarea(proyecto, titulo, descripcion, vencimiento, prioridad, notas
     console.log(proyectos);
 };
 
+function actualizarTarea(proyecto, numeroTarea, titulo, descripcion, vencimiento, prioridad, notas, checklist) {
+    proyectos[proyecto].tareas[numeroTarea].titulo = titulo;
+    proyectos[proyecto].tareas[numeroTarea].descripcion = descripcion;
+    proyectos[proyecto].tareas[numeroTarea].vencimiento = vencimiento;
+    proyectos[proyecto].tareas[numeroTarea].prioridad = prioridad;
+    proyectos[proyecto].tareas[numeroTarea].notas = notas;
+    proyectos[proyecto].tareas[numeroTarea].checklist = checklist;
+};
+
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
 
-export {crearProyecto, crearTarea, proyectos};
+export {proyectos, crearProyecto, crearTarea, actualizarTarea};
