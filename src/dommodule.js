@@ -1,4 +1,29 @@
 import {proyectos, crearProyecto, crearTarea, actualizarTarea} from "./index.js";
+import { format, formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale';
+
+function domNavProyectos(proyectoElegido) {
+    function llamarMostrarTareas(event) {
+        const proyectoAmostrarTareas = event.target.textContent;
+        domMostrarTareas(proyectoAmostrarTareas);
+    };
+
+    const proyectosAborrar = document.querySelectorAll(".proyectoNav");
+    proyectosAborrar.forEach(proyecto => proyecto.remove());
+
+    const nav = document.querySelector("nav");
+
+    for (const key of Object.keys(proyectos)) {  
+        const proyecto = document.createElement("div");
+        proyecto.classList.add("proyectoNav");
+        if (proyectos[key].titulo === proyectoElegido) {
+            proyecto.classList.add("proyectoElegido");
+        }
+        proyecto.textContent = proyectos[key].titulo;
+        proyecto.addEventListener("click", llamarMostrarTareas);
+        nav.appendChild(proyecto);
+    }
+};
 
 function domCrearProyecto() {
     function llamarCrearProyecto() {
@@ -56,6 +81,78 @@ function domCrearProyecto() {
     cuerpi.appendChild(divFormulario);
 };
 
+function domMostrarTareas(proyectoElegido) {
+    
+    function llamarCrearTarea() {
+        domCrearTarea(proyectoElegido);
+    };
+
+    function llamarVerEditar(event) {
+        const tituloProyecto = event.target.getAttribute("data-proyecto");
+        const numeroTarea = event.target.getAttribute("data-tarea");
+        domVerEditar(tituloProyecto, numeroTarea);
+    };    
+    
+    const mainAborrar = document.querySelector("main");
+    mainAborrar.remove();
+    const main = document.createElement("main");
+
+    const descripcionProyecto = document.createElement("h2");
+    descripcionProyecto.textContent = proyectos[proyectoElegido].descripcion;
+    main.appendChild(descripcionProyecto);
+
+    const botonCrearTarea = document.createElement("button");
+    botonCrearTarea.textContent = "Agregar Tarea Nueva";
+    botonCrearTarea.addEventListener("click", llamarCrearTarea);
+    main.appendChild(botonCrearTarea);
+        
+    for(let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
+        const tareaTarjeta = document.createElement("div");
+        // Este ID es para q lo encuentre domVerEditar.
+        tareaTarjeta.setAttribute("id", `tarea${i}`);
+        tareaTarjeta.classList.add("tareaTarjeta");
+        
+        if (proyectos[proyectoElegido].tareas[i].prioridad === "Alta") {
+            tareaTarjeta.classList.add("prioridadAlta");
+        } else if (proyectos[proyectoElegido].tareas[i].prioridad === "Mediana") {
+            tareaTarjeta.classList.add("prioridadMediana");
+        } else if (proyectos[proyectoElegido].tareas[i].prioridad === "Baja") {
+            tareaTarjeta.classList.add("prioridadBaja");
+        };
+
+        const tituloH3 = document.createElement("h3");
+        tituloH3.textContent = proyectos[proyectoElegido].tareas[i].titulo;
+        
+        const vencimiento = document.createElement("div");
+        vencimiento.classList.add("vencimiento");
+        vencimiento.textContent = `Vencimiento: ${format(proyectos[proyectoElegido].tareas[i].vencimiento, "d 'de' MMMM yyyy", {locale: es})}. `
+        + "Vence en: " + (formatDistanceToNow(proyectos[proyectoElegido].tareas[i].vencimiento, {locale: es}));
+
+
+        const botonVerEditar = document.createElement("button");
+        botonVerEditar.setAttribute("data-proyecto", `${proyectoElegido}`)
+        botonVerEditar.setAttribute("data-tarea", `${i}`);
+        botonVerEditar.setAttribute("id", `tarea${i}`);
+        botonVerEditar.textContent = "Ver detalles / Editar";
+        botonVerEditar.addEventListener("click", llamarVerEditar);
+
+        tareaTarjeta.appendChild(tituloH3);
+        tareaTarjeta.appendChild(vencimiento);   
+        tareaTarjeta.appendChild(botonVerEditar);
+        main.appendChild(tareaTarjeta);        
+    };
+
+    const cuerpi = document.querySelector("body");
+    cuerpi.appendChild(main);
+    const proyectosListado = document.querySelectorAll(".proyectoNav")
+    proyectosListado.forEach(unProyecto=>unProyecto.classList.remove("proyectoElegido"))
+    proyectosListado.forEach(unProyecto=>{
+        if(unProyecto.textContent === proyectoElegido) {
+            unProyecto.classList.add("proyectoElegido");
+        };
+    })
+};
+
 function domCrearTarea(proyectoElegido) {
     crearTarea(proyectoElegido,"", "", "", "", "", "");
     domMostrarTareas(proyectoElegido);
@@ -74,7 +171,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
         } else if (inputRadioBaja.checked) {
             prioridad = "Baja";
         };
-        actualizarTarea(tituloProyecto, numeroTarea, inputTitulo.value, textAreaDescripcion.value, inputDateVencimiento.value, prioridad, textAreaNotas.value, checklistA);
+        actualizarTarea(tituloProyecto, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+"T00:00:00"), prioridad, textAreaNotas.value, checklistA);
         domMostrarTareas(tituloProyecto);
     };
 
@@ -188,99 +285,6 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     formulario.appendChild(botonGuardarCambios);
 
     tarjetaAeditar.appendChild(formulario);
-};
-
-function domMostrarTareas(proyectoElegido) {
-    
-    function llamarCrearTarea() {
-        domCrearTarea(proyectoElegido);
-    };
-
-    function llamarVerEditar(event) {
-        const tituloProyecto = event.target.getAttribute("data-proyecto");
-        const numeroTarea = event.target.getAttribute("data-tarea");
-        domVerEditar(tituloProyecto, numeroTarea);
-    };    
-    
-    const mainAborrar = document.querySelector("main");
-    mainAborrar.remove();
-    const main = document.createElement("main");
-
-    const descripcionProyecto = document.createElement("h2");
-    descripcionProyecto.textContent = proyectos[proyectoElegido].descripcion;
-    main.appendChild(descripcionProyecto);
-
-    const botonCrearTarea = document.createElement("button");
-    botonCrearTarea.textContent = "Agregar Tarea Nueva";
-    botonCrearTarea.addEventListener("click", llamarCrearTarea);
-    main.appendChild(botonCrearTarea);
-        
-    for(let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
-        const tareaTarjeta = document.createElement("div");
-        // Este ID es para q lo encuentre domVerEditar.
-        tareaTarjeta.setAttribute("id", `tarea${i}`);
-        tareaTarjeta.classList.add("tareaTarjeta");
-        
-        if (proyectos[proyectoElegido].tareas[i].prioridad === "Alta") {
-            tareaTarjeta.classList.add("prioridadAlta");
-        } else if (proyectos[proyectoElegido].tareas[i].prioridad === "Mediana") {
-            tareaTarjeta.classList.add("prioridadMediana");
-        } else if (proyectos[proyectoElegido].tareas[i].prioridad === "Baja") {
-            tareaTarjeta.classList.add("prioridadBaja");
-        };
-
-        const tituloH3 = document.createElement("h3");
-        tituloH3.textContent = proyectos[proyectoElegido].tareas[i].titulo;
-        
-        const vencimiento = document.createElement("div");
-        vencimiento.classList.add("vencimiento");
-        vencimiento.textContent = `Vencimiento: ${proyectos[proyectoElegido].tareas[i].vencimiento}`;
-
-        const botonVerEditar = document.createElement("button");
-        botonVerEditar.setAttribute("data-proyecto", `${proyectoElegido}`)
-        botonVerEditar.setAttribute("data-tarea", `${i}`);
-        botonVerEditar.setAttribute("id", `tarea${i}`);
-        botonVerEditar.textContent = "Ver detalles / Editar";
-        botonVerEditar.addEventListener("click", llamarVerEditar);
-
-        tareaTarjeta.appendChild(tituloH3);
-        tareaTarjeta.appendChild(vencimiento);   
-        tareaTarjeta.appendChild(botonVerEditar);
-        main.appendChild(tareaTarjeta);        
-    };
-
-    const cuerpi = document.querySelector("body");
-    cuerpi.appendChild(main);
-    const proyectosListado = document.querySelectorAll(".proyectoNav")
-    proyectosListado.forEach(unProyecto=>unProyecto.classList.remove("proyectoElegido"))
-    proyectosListado.forEach(unProyecto=>{
-        if(unProyecto.textContent === proyectoElegido) {
-            unProyecto.classList.add("proyectoElegido");
-        };
-    })
-};
-
-function domNavProyectos(proyectoElegido) {
-    function llamarMostrarTareas(event) {
-        const proyectoAmostrarTareas = event.target.textContent;
-        domMostrarTareas(proyectoAmostrarTareas);
-    };
-
-    const proyectosAborrar = document.querySelectorAll(".proyectoNav");
-    proyectosAborrar.forEach(proyecto => proyecto.remove());
-
-    const nav = document.querySelector("nav");
-
-    for (const key of Object.keys(proyectos)) {  
-        const proyecto = document.createElement("div");
-        proyecto.classList.add("proyectoNav");
-        if (proyectos[key].titulo === proyectoElegido) {
-            proyecto.classList.add("proyectoElegido");
-        }
-        proyecto.textContent = proyectos[key].titulo;
-        proyecto.addEventListener("click", llamarMostrarTareas);
-        nav.appendChild(proyecto);
-    }
 };
 
 export {

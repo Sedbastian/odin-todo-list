@@ -9,20 +9,10 @@ function fabricarProyecto (titulo, descripcion) {
     return {titulo, descripcion, tareas, fabricarTarea};
 };
 
+// Agrega un nuevo objeto (proyecto) al objeto proyectos con key (proyecto.titulo).
 function nuevoProyecto (proyecto) {
     proyectos[proyecto.titulo] = proyecto;
 };
-
-const proyectos = {};
-
-nuevoProyecto(fabricarProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial."));
-
-proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", "2022-11-25", "Alta");
-proyectos["Tareas Sueltas"].tareas[0].notas = "Notas de ejemplo!";
-proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", "2023-01-02", "Mediana");
-proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", "2022-08-09", "Baja");
-
-domNavProyectos();
 
 // A esta funcion la termina llamando el eventListener del boton crearProyecto.
 function crearProyecto(titulo, descripcion) {
@@ -35,6 +25,7 @@ function crearTarea(proyecto, titulo, descripcion, vencimiento, prioridad, notas
     proyectos[proyecto].fabricarTarea(titulo, descripcion, vencimiento, prioridad, notas, checklist);
 };
 
+// A esta funcion la termina llamando el eventListener del boton guardarCambios.
 function actualizarTarea(proyecto, numeroTarea, titulo, descripcion, vencimiento, prioridad, notas, checklist) {
     proyectos[proyecto].tareas[numeroTarea].titulo = titulo;
     proyectos[proyecto].tareas[numeroTarea].descripcion = descripcion;
@@ -43,6 +34,18 @@ function actualizarTarea(proyecto, numeroTarea, titulo, descripcion, vencimiento
     proyectos[proyecto].tareas[numeroTarea].notas = notas;
     proyectos[proyecto].tareas[numeroTarea].checklist = checklist;
 };
+
+const proyectos = {};
+
+nuevoProyecto(fabricarProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial."));
+
+// Tareas de ejemplo:
+proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", new Date("2022-11-25T00:00:00"), "Alta");
+proyectos["Tareas Sueltas"].tareas[0].notas = "Notas de ejemplo!";
+proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", new Date("2023-01-02T00:00:00"), "Mediana");
+proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", new Date("2022-08-09T00:00:00"), "Baja");
+
+domNavProyectos();
 
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
 
