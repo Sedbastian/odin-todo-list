@@ -1,4 +1,4 @@
-import {proyectos, crearProyecto, crearTarea, actualizarTarea} from "./index.js";
+import {proyectos, crearProyecto, crearTarea, actualizarTarea, eliminarTarea} from "./index.js";
 import { format, formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 
@@ -31,6 +31,7 @@ function domCrearProyecto() {
         const descripcion = `${inputDescripcion.value}`;
         crearProyecto(titulo, descripcion);
         cuerpi.removeChild(divFormulario);
+        domNavProyectos(titulo);
         domMostrarTareas(titulo);
     };
 
@@ -125,9 +126,7 @@ function domMostrarTareas(proyectoElegido) {
         
         const vencimiento = document.createElement("div");
         vencimiento.classList.add("vencimiento");
-        vencimiento.textContent = `Vencimiento: ${format(proyectos[proyectoElegido].tareas[i].vencimiento, "d 'de' MMMM yyyy", {locale: es})}. `
-        + "Vence en: " + (formatDistanceToNow(proyectos[proyectoElegido].tareas[i].vencimiento, {locale: es}));
-
+        vencimiento.textContent = `Vencimiento: ${format(proyectos[proyectoElegido].tareas[i].vencimiento, "d 'de' MMMM yyyy", {locale: es})}.  Vence en: ${formatDistanceToNow(proyectos[proyectoElegido].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
 
         const botonVerEditar = document.createElement("button");
         botonVerEditar.setAttribute("data-proyecto", `${proyectoElegido}`)
@@ -154,13 +153,14 @@ function domMostrarTareas(proyectoElegido) {
 };
 
 function domCrearTarea(proyectoElegido) {
-    crearTarea(proyectoElegido,"", "", "", "", "", "");
+    crearTarea(proyectoElegido,"", "", new Date(), "", "", "");
     domMostrarTareas(proyectoElegido);
     const numeroTarea = proyectos[proyectoElegido].tareas.length - 1; 
     domVerEditar(proyectoElegido, numeroTarea);
 };
 
-function domVerEditar(tituloProyecto, numeroTarea) {
+function domVerEditar(proyectoElegido, numeroTarea) {
+    
     function llamarGuardarCambios() {
         const checklistA = "";
         let prioridad;
@@ -171,8 +171,15 @@ function domVerEditar(tituloProyecto, numeroTarea) {
         } else if (inputRadioBaja.checked) {
             prioridad = "Baja";
         };
-        actualizarTarea(tituloProyecto, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+"T00:00:00"), prioridad, textAreaNotas.value, checklistA);
-        domMostrarTareas(tituloProyecto);
+        actualizarTarea(proyectoElegido, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+"T00:00:00"), prioridad, textAreaNotas.value, checklistA);
+        domMostrarTareas(proyectoElegido);
+    };
+
+    function llamarEliminarTarea() {
+        if (window.confirm(`¿Realmente querés Eliminar la Tarea: ${proyectos[proyectoElegido].tareas[numeroTarea].titulo}?`)) {
+            eliminarTarea(proyectoElegido, numeroTarea);
+            domMostrarTareas(proyectoElegido);
+        };
     };
 
     const tarjetaAeditar = document.querySelector(`#tarea${numeroTarea}`);
@@ -190,7 +197,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputTitulo.setAttribute("type", "text");
     inputTitulo.setAttribute("id", "titulo");
     inputTitulo.setAttribute("required", true);
-    inputTitulo.value = proyectos[tituloProyecto].tareas[numeroTarea].titulo;
+    inputTitulo.value = proyectos[proyectoElegido].tareas[numeroTarea].titulo;
     formulario.appendChild(inputTitulo);
 
     // Fieldset de Prioridad:
@@ -212,7 +219,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputRadioAlta.setAttribute("id", "alta");
     inputRadioAlta.setAttribute("name", "prioridad");
     inputRadioAlta.setAttribute("value", "alta");
-    if (proyectos[tituloProyecto].tareas[numeroTarea].prioridad === "Alta") {
+    if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Alta") {
         inputRadioAlta.setAttribute("checked", true);
     };
     divAlta.appendChild(inputRadioAlta);
@@ -229,7 +236,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputRadioMediana.setAttribute("id", "mediana");
     inputRadioMediana.setAttribute("name", "prioridad");
     inputRadioMediana.setAttribute("value", "mediana");
-    if (proyectos[tituloProyecto].tareas[numeroTarea].prioridad === "Mediana") {
+    if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Mediana") {
         inputRadioMediana.setAttribute("checked", true);
     };
     divMediana.appendChild(inputRadioMediana);
@@ -246,7 +253,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputRadioBaja.setAttribute("id", "baja");
     inputRadioBaja.setAttribute("name", "prioridad");
     inputRadioBaja.setAttribute("value", "baja");
-    if (proyectos[tituloProyecto].tareas[numeroTarea].prioridad === "Baja") {
+    if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Baja") {
         inputRadioBaja.setAttribute("checked", true);
     };
     divBaja.appendChild(inputRadioBaja);
@@ -264,7 +271,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
 
     const textAreaDescripcion = document.createElement("textarea");
     textAreaDescripcion.setAttribute("id", "descripcion");
-    textAreaDescripcion.value = proyectos[tituloProyecto].tareas[numeroTarea].descripcion;
+    textAreaDescripcion.value = proyectos[proyectoElegido].tareas[numeroTarea].descripcion;
     formulario.appendChild(textAreaDescripcion);
 
     const labelVencimiento = document.createElement("label");
@@ -275,7 +282,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     const inputDateVencimiento = document.createElement("input");
     inputDateVencimiento.setAttribute("type", "date");
     inputDateVencimiento.setAttribute("id", "vencimiento");
-    inputDateVencimiento.value = format(proyectos[tituloProyecto].tareas[numeroTarea].vencimiento, "yyyy-MM-dd");
+    inputDateVencimiento.value = format(proyectos[proyectoElegido].tareas[numeroTarea].vencimiento, "yyyy-MM-dd");
     formulario.appendChild(inputDateVencimiento);
 
     const labelNotas = document.createElement("label");
@@ -285,13 +292,19 @@ function domVerEditar(tituloProyecto, numeroTarea) {
 
     const textAreaNotas = document.createElement("textarea");
     textAreaNotas.setAttribute("id", "notas");
-    textAreaNotas.value = proyectos[tituloProyecto].tareas[numeroTarea].notas;
+    textAreaNotas.value = proyectos[proyectoElegido].tareas[numeroTarea].notas;
     formulario.appendChild(textAreaNotas);
     
     const botonGuardarCambios = document.createElement("button");
     botonGuardarCambios.textContent = "Guardar Cambios";
     botonGuardarCambios.addEventListener("click", llamarGuardarCambios);
     formulario.appendChild(botonGuardarCambios);
+
+    const botonEliminarTarea = document.createElement("button");
+    botonEliminarTarea.textContent = "Eliminar Tarea";
+    botonEliminarTarea.classList.add("eliminarTarea");
+    botonEliminarTarea.addEventListener("click", llamarEliminarTarea);
+    formulario.appendChild(botonEliminarTarea);
 
     tarjetaAeditar.appendChild(formulario);
 };

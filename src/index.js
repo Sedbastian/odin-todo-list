@@ -9,15 +9,10 @@ function fabricarProyecto (titulo, descripcion) {
     return {titulo, descripcion, tareas, fabricarTarea};
 };
 
-// Agrega un nuevo objeto (proyecto) al objeto proyectos con key (proyecto.titulo).
-function nuevoProyecto (proyecto) {
-    proyectos[proyecto.titulo] = proyecto;
-};
-
 // A esta funcion la termina llamando el eventListener del boton crearProyecto.
 function crearProyecto(titulo, descripcion) {
-    nuevoProyecto(fabricarProyecto(titulo, descripcion));
-    domNavProyectos(titulo);
+    const proyectoAagregar = fabricarProyecto(titulo, descripcion);
+    proyectos[proyectoAagregar.titulo] = proyectoAagregar;
 };
 
 // A esta funcion la termina llamando el eventListener del boton crearTarea.
@@ -35,9 +30,13 @@ function actualizarTarea(proyecto, numeroTarea, titulo, descripcion, vencimiento
     proyectos[proyecto].tareas[numeroTarea].checklist = checklist;
 };
 
+function eliminarTarea(proyectoElegido, numeroTarea) {
+    proyectos[proyectoElegido].tareas.splice(numeroTarea, 1);
+};
+
 const proyectos = {};
 
-nuevoProyecto(fabricarProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial."));
+crearProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial.");
 
 // Tareas de ejemplo:
 proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", new Date("2022-11-25T00:00:00"), "Alta");
@@ -49,4 +48,4 @@ domNavProyectos();
 
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
 
-export {proyectos, crearProyecto, crearTarea, actualizarTarea};
+export {proyectos, crearProyecto, crearTarea, actualizarTarea, eliminarTarea};
