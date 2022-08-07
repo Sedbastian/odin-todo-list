@@ -33,7 +33,6 @@ function crearProyecto(titulo, descripcion) {
 // A esta funcion la termina llamando el eventListener del boton crearTarea.
 function crearTarea(proyecto, titulo, descripcion, vencimiento, prioridad, notas, checklist) {
     proyectos[proyecto].fabricarTarea(titulo, descripcion, vencimiento, prioridad, notas, checklist);
-    console.log(proyectos);
 };
 
 function actualizarTarea(proyecto, numeroTarea, titulo, descripcion, vencimiento, prioridad, notas, checklist) {

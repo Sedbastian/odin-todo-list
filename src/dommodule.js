@@ -57,10 +57,10 @@ function domCrearProyecto() {
 };
 
 function domCrearTarea(proyectoElegido) {
-        const numeroTarea = proyectos[proyectoElegido].tareas.length;
-        proyectos[proyectoElegido].fabricarTarea("", "", "", "", "", "");
-        domMostrarTareas(proyectoElegido);
-        domVerEditar(proyectoElegido, numeroTarea);
+    crearTarea(proyectoElegido,"", "", "", "", "", "");
+    domMostrarTareas(proyectoElegido);
+    const numeroTarea = proyectos[proyectoElegido].tareas.length - 1; 
+    domVerEditar(proyectoElegido, numeroTarea);
 };
 
 function domVerEditar(tituloProyecto, numeroTarea) {
@@ -191,6 +191,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
 };
 
 function domMostrarTareas(proyectoElegido) {
+    
     function llamarCrearTarea() {
         domCrearTarea(proyectoElegido);
     };
@@ -199,7 +200,7 @@ function domMostrarTareas(proyectoElegido) {
         const tituloProyecto = event.target.getAttribute("data-proyecto");
         const numeroTarea = event.target.getAttribute("data-tarea");
         domVerEditar(tituloProyecto, numeroTarea);
-    };
+    };    
     
     const mainAborrar = document.querySelector("main");
     mainAborrar.remove();
