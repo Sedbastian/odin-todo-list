@@ -275,7 +275,7 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     const inputDateVencimiento = document.createElement("input");
     inputDateVencimiento.setAttribute("type", "date");
     inputDateVencimiento.setAttribute("id", "vencimiento");
-    inputDateVencimiento.value = proyectos[tituloProyecto].tareas[numeroTarea].vencimiento;
+    inputDateVencimiento.value = format(proyectos[tituloProyecto].tareas[numeroTarea].vencimiento, "yyyy-MM-dd");
     formulario.appendChild(inputDateVencimiento);
 
     const labelNotas = document.createElement("label");
