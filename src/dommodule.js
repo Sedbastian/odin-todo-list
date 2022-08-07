@@ -212,6 +212,9 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputRadioAlta.setAttribute("id", "alta");
     inputRadioAlta.setAttribute("name", "prioridad");
     inputRadioAlta.setAttribute("value", "alta");
+    if (proyectos[tituloProyecto].tareas[numeroTarea].prioridad === "Alta") {
+        inputRadioAlta.setAttribute("checked", true);
+    };
     divAlta.appendChild(inputRadioAlta);
 
     const divMediana = document.createElement("div");
@@ -226,6 +229,9 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputRadioMediana.setAttribute("id", "mediana");
     inputRadioMediana.setAttribute("name", "prioridad");
     inputRadioMediana.setAttribute("value", "mediana");
+    if (proyectos[tituloProyecto].tareas[numeroTarea].prioridad === "Mediana") {
+        inputRadioMediana.setAttribute("checked", true);
+    };
     divMediana.appendChild(inputRadioMediana);
 
     const divBaja = document.createElement("div");
@@ -240,6 +246,9 @@ function domVerEditar(tituloProyecto, numeroTarea) {
     inputRadioBaja.setAttribute("id", "baja");
     inputRadioBaja.setAttribute("name", "prioridad");
     inputRadioBaja.setAttribute("value", "baja");
+    if (proyectos[tituloProyecto].tareas[numeroTarea].prioridad === "Baja") {
+        inputRadioBaja.setAttribute("checked", true);
+    };
     divBaja.appendChild(inputRadioBaja);
 
     fieldsetPrioridad.appendChild(divAlta);
