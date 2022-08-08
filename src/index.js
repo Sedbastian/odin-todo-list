@@ -78,20 +78,17 @@ function eliminarProyectosGuardados() {
 let proyectos = {};
 
 // Proyecto predeterminado "Tareas Sueltas":
-crearProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial.");
+// crearProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial.");
 
 // Tareas de ejemplo:
-proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", new Date("2022-11-25T00:00:00"), "Alta");
-proyectos["Tareas Sueltas"].tareas[0].notas = "Notas de ejemplo!";
-proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", new Date("2023-01-02T00:00:00"), "Mediana");
-proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", new Date("2022-08-09T00:00:00"), "Baja");
-
-
-domNavProyectos();
+// proyectos["Tareas Sueltas"].fabricarTarea("Primera Tarea", "Primera prueba", new Date("2022-11-25T00:00:00"), "Alta");
+// proyectos["Tareas Sueltas"].tareas[0].notas = "Notas de ejemplo!";
+// proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", new Date("2023-01-02T00:00:00"), "Mediana");
+// proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", new Date("2022-08-09T00:00:00"), "Baja");
 
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
 document.querySelector(".eliminarTodo").addEventListener("click", eliminarProyectosGuardados);
 
-// cargarProyectos();
-
+cargarProyectos();
+domNavProyectos();
 export {proyectos, crearProyecto, eliminarProyecto, crearTarea, actualizarTarea, eliminarTarea};
