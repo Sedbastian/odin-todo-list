@@ -1,6 +1,8 @@
 import './style.css';
-import {domCrearProyecto, domCrearTarea, domNavProyectos} from "./dommodule.js";
+import {domCrearProyecto, domNavProyectos} from "./dommodule.js";
+import { parseISO } from 'date-fns';
 
+// Llamada por crearProyecto();
 function fabricarProyecto (titulo, descripcion) {
     const tareas = [];
     const fabricarTarea = function (titulo, descripcion, vencimiento, prioridad, notas, checklist) {
@@ -13,11 +15,18 @@ function fabricarProyecto (titulo, descripcion) {
 function crearProyecto(titulo, descripcion) {
     const proyectoAagregar = fabricarProyecto(titulo, descripcion);
     proyectos[proyectoAagregar.titulo] = proyectoAagregar;
+    guardarProyectos();
+};
+
+function eliminarProyecto(proyectoElegido) {
+    delete proyectos[proyectoElegido];
+    guardarProyectos();
 };
 
 // A esta funcion la termina llamando el eventListener del boton crearTarea.
 function crearTarea(proyecto, titulo, descripcion, vencimiento, prioridad, notas, checklist) {
     proyectos[proyecto].fabricarTarea(titulo, descripcion, vencimiento, prioridad, notas, checklist);
+    guardarProyectos();
 };
 
 // A esta funcion la termina llamando el eventListener del boton guardarCambios.
@@ -28,14 +37,47 @@ function actualizarTarea(proyecto, numeroTarea, titulo, descripcion, vencimiento
     proyectos[proyecto].tareas[numeroTarea].prioridad = prioridad;
     proyectos[proyecto].tareas[numeroTarea].notas = notas;
     proyectos[proyecto].tareas[numeroTarea].checklist = checklist;
+    guardarProyectos();
 };
 
 function eliminarTarea(proyectoElegido, numeroTarea) {
     proyectos[proyectoElegido].tareas.splice(numeroTarea, 1);
+    guardarProyectos();
 };
 
-const proyectos = {};
+function guardarProyectos() {
+    localStorage.setItem("proyectosGuardados", JSON.stringify(proyectos));
+};
 
+function cargarProyectos() {
+    if (localStorage.getItem("proyectosGuardados")) {
+        const proyectosGuardadosJSON = localStorage.getItem("proyectosGuardados");
+        const proyectosGuardados = JSON.parse(proyectosGuardadosJSON);
+        // Agregar a cada proyecto su método fabricarTarea (que perdió x la transformación a JSON):
+        for (const key of Object.keys(proyectosGuardados)) {
+            proyectosGuardados[key].fabricarTarea = function (titulo, descripcion, vencimiento, prioridad, notas, checklist) {
+                proyectosGuardados[key].tareas.push({titulo, descripcion, vencimiento, prioridad, notas, checklist});
+            };
+            for (let index = 0; index < proyectosGuardados[key].tareas.length; index++) {
+                proyectosGuardados[key].tareas[index].vencimiento = parseISO(proyectosGuardados[key].tareas[index].vencimiento);
+            };
+        };
+        proyectos = proyectosGuardados;
+        console.log(proyectos);
+    };
+};
+
+function eliminarProyectosGuardados() {
+    if (window.confirm("¿Realmente querés Eliminar Todos los Proyectos Guardados?")) {
+        localStorage.clear();
+        proyectos = {};
+        domNavProyectos();
+    };
+};
+
+let proyectos = {};
+
+// Proyecto predeterminado "Tareas Sueltas":
 crearProyecto("Tareas Sueltas", "Estas son Tareas que no están relacionadas con ningún proyecto en especial.");
 
 // Tareas de ejemplo:
@@ -44,8 +86,12 @@ proyectos["Tareas Sueltas"].tareas[0].notas = "Notas de ejemplo!";
 proyectos["Tareas Sueltas"].fabricarTarea("Segunda Tarea", "Solo una prueba", new Date("2023-01-02T00:00:00"), "Mediana");
 proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", new Date("2022-08-09T00:00:00"), "Baja");
 
+
 domNavProyectos();
 
 document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
+document.querySelector(".eliminarTodo").addEventListener("click", eliminarProyectosGuardados);
 
-export {proyectos, crearProyecto, crearTarea, actualizarTarea, eliminarTarea};
+// cargarProyectos();
+
+export {proyectos, crearProyecto, eliminarProyecto, crearTarea, actualizarTarea, eliminarTarea};

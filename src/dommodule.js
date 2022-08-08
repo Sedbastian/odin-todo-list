@@ -1,4 +1,4 @@
-import {proyectos, crearProyecto, crearTarea, actualizarTarea, eliminarTarea} from "./index.js";
+import {proyectos, crearProyecto, eliminarProyecto, crearTarea, actualizarTarea, eliminarTarea} from "./index.js";
 import { format, formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 
@@ -88,6 +88,16 @@ function domMostrarTareas(proyectoElegido) {
         domCrearTarea(proyectoElegido);
     };
 
+    function llamarEliminarProyecto() {
+        if (window.confirm(`¿Realmente querés Eliminar el Proyecto "${proyectoElegido}"`)) {
+            eliminarProyecto(proyectoElegido);
+            main.remove();
+            const nuevoMainVacio = document.createElement("main");
+            cuerpi.appendChild(nuevoMainVacio);
+            domNavProyectos();
+        };
+    };
+
     function llamarVerEditar(event) {
         const tituloProyecto = event.target.getAttribute("data-proyecto");
         const numeroTarea = event.target.getAttribute("data-tarea");
@@ -106,6 +116,11 @@ function domMostrarTareas(proyectoElegido) {
     botonCrearTarea.textContent = "Agregar Tarea Nueva";
     botonCrearTarea.addEventListener("click", llamarCrearTarea);
     main.appendChild(botonCrearTarea);
+
+    const botonEliminarProyecto = document.createElement("button");
+    botonEliminarProyecto.textContent = "Eliminar Proyecto";
+    botonEliminarProyecto.addEventListener("click", llamarEliminarProyecto);
+    main.appendChild(botonEliminarProyecto);
         
     for(let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
         const tareaTarjeta = document.createElement("div");
