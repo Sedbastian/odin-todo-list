@@ -3,19 +3,15 @@
     src: url("./Raleway-VariableFont_wght.ttf") format('truetype');
 }
 
-@font-face {
-    font-family: 'Montserrat';
-    src: url('./Montserrat-VariableFont_wght.ttf') format('truetype');
-}
-
 * {
     font-family: "Raleway-Medium";
 }
 
 body {
+    display: grid;
+
     margin: 0;
     padding: 0;
-    display: grid;
     grid-template-columns: max-content 1fr;
     grid-template-rows: min-content, 1fr, min-content;
 }
@@ -23,8 +19,10 @@ body {
 h1 {
     grid-column: 1 / 3;
     grid-row: 1 / 2;
+
     margin: 0;
     padding: 1rem;
+    text-align: center;
     background-color: rgb(64, 0, 128);
     color: rgb(255, 128, 0);
 }
@@ -33,19 +31,90 @@ h1 {
 nav {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
-    /* display:flex; */
-    /* gap: 2rem; */
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content min-content min-content;
+
     padding: 1rem;
+    background-color: rgb(64, 0, 128);
     font-size: 2rem;
+    color: white;
 }
 
-nav > div {
+nav .tareasSueltas {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+
+    margin-bottom: 2rem;
     padding: 1rem;
+    border-radius: 1rem;
 }
 
-nav .proyectos,
-nav .hoy {
-    padding-top: 3rem;
+nav .porVencimiento {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    
+    /* border-top-style: dotted;
+    border-color: violet; */
+}
+
+nav .porVencimiento > div {
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+nav .proyectos {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+
+    /* display: flex;
+    flex-direction: column; */
+
+    margin-top: 3rem;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    background-color: rgb(50, 0, 100);
+}
+
+nav .proyectos .tituloProyectos {
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+nav .proyectos .comandoProyectos {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: rgb(40, 0, 75);
+}
+
+nav .proyectos .comandoProyectos .proyectoNuevo {
+    margin-bottom: .5rem;
+    padding: 1rem;
+    border-radius: 3rem;
+    background-color: rgb(255, 128, 0);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+nav .proyectos .comandoProyectos .eliminarTodo {
+    padding: .5rem;
+    border-radius: 3rem;
+    background-color: rgb(255, 60, 0);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+nav .proyectoNav {
+    padding: 1rem;
+    border-radius: 1rem;
+
+    color: rgb(128, 0, 255);
 }
 
 nav .proyectoElegido {
@@ -76,6 +145,7 @@ nav .proyectoElegido {
 main {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+
     border-style: solid;
 }
 
@@ -117,9 +187,10 @@ main .tareaTarjeta.prioridadBaja {
 }
 
 footer {
-    margin: 0;
     grid-column: 1 / 3;
     grid-row: 3 / 4;
+
+    margin: 0;
     background-color: #666666;
     text-align: center;
 }

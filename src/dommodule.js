@@ -11,7 +11,7 @@ function domNavProyectos(proyectoElegido) {
     const proyectosAborrar = document.querySelectorAll(".proyectoNav");
     proyectosAborrar.forEach(proyecto => proyecto.remove());
 
-    const nav = document.querySelector("nav");
+    const divProyectos = document.querySelector(".proyectos");
 
     for (const key of Object.keys(proyectos)) {  
         if (key !== "Tareas Sueltas") {
@@ -22,7 +22,7 @@ function domNavProyectos(proyectoElegido) {
             }
             proyecto.textContent = proyectos[key].titulo;
             proyecto.addEventListener("click", llamarMostrarTareas);
-            nav.appendChild(proyecto);
+            divProyectos.appendChild(proyecto);
         };
     };
 };
@@ -82,6 +82,11 @@ function domCrearProyecto() {
 
     const cuerpi = document.querySelector("body");
     cuerpi.appendChild(divFormulario);
+};
+
+function domMostrarTareasSueltas() {
+    domMostrarTareas("Tareas Sueltas");
+    document.querySelector(".tareasSueltas").classList.add("proyectoElegido");
 };
 
 function domMostrarTareas(proyectoElegido) {
@@ -166,7 +171,8 @@ function domMostrarTareas(proyectoElegido) {
         if(unProyecto.textContent === proyectoElegido) {
             unProyecto.classList.add("proyectoElegido");
         };
-    })
+    });
+    document.querySelector(".tareasSueltas").classList.remove("proyectoElegido");
 };
 
 function domCrearTarea(proyectoElegido) {
@@ -328,6 +334,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
 export {
     domNavProyectos,
+    domMostrarTareasSueltas,
     domMostrarTareas,
     domCrearProyecto,
     domCrearTarea,

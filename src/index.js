@@ -1,5 +1,5 @@
 import './style.css';
-import {domNavProyectos, domMostrarTareas, domCrearProyecto, } from "./dommodule.js";
+import {domNavProyectos, domMostrarTareasSueltas, domCrearProyecto, } from "./dommodule.js";
 import { parseISO } from 'date-fns';
 
 // Llamada por crearProyecto();
@@ -75,7 +75,7 @@ function eliminarProyectosGuardados() {
 };
 
 function iniciar() {
-    document.querySelector(".tareasSueltas").addEventListener("click", () => domMostrarTareas("Tareas Sueltas"));
+    document.querySelector(".tareasSueltas").addEventListener("click", domMostrarTareasSueltas);
     document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
     document.querySelector(".eliminarTodo").addEventListener("click", eliminarProyectosGuardados);
 
@@ -90,6 +90,7 @@ function iniciar() {
         // proyectos["Tareas Sueltas"].fabricarTarea("Tercera Tarea", "Ultima prueba", new Date("2022-08-09T00:00:00"), "Baja");
     };
     domNavProyectos();
+    domMostrarTareasSueltas();
 };
 
 let proyectos = {};
