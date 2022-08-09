@@ -14,15 +14,17 @@ function domNavProyectos(proyectoElegido) {
     const nav = document.querySelector("nav");
 
     for (const key of Object.keys(proyectos)) {  
-        const proyecto = document.createElement("div");
-        proyecto.classList.add("proyectoNav");
-        if (proyectos[key].titulo === proyectoElegido) {
-            proyecto.classList.add("proyectoElegido");
-        }
-        proyecto.textContent = proyectos[key].titulo;
-        proyecto.addEventListener("click", llamarMostrarTareas);
-        nav.appendChild(proyecto);
-    }
+        if (key !== "Tareas Sueltas") {
+            const proyecto = document.createElement("div");
+            proyecto.classList.add("proyectoNav");
+            if (proyectos[key].titulo === proyectoElegido) {
+                proyecto.classList.add("proyectoElegido");
+            }
+            proyecto.textContent = proyectos[key].titulo;
+            proyecto.addEventListener("click", llamarMostrarTareas);
+            nav.appendChild(proyecto);
+        };
+    };
 };
 
 function domCrearProyecto() {
@@ -325,7 +327,8 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 };
 
 export {
+    domNavProyectos,
+    domMostrarTareas,
     domCrearProyecto,
     domCrearTarea,
-    domNavProyectos
 };

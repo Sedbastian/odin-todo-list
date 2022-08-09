@@ -1,9 +1,51 @@
+@font-face {
+    font-family: "Raleway-Medium";
+    src: url("./Raleway-VariableFont_wght.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./Montserrat-VariableFont_wght.ttf') format('truetype');
+}
+
+* {
+    font-family: "Raleway-Medium";
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: min-content, 1fr, min-content;
+}
+
+h1 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    margin: 0;
+    padding: 1rem;
+    background-color: rgb(64, 0, 128);
+    color: rgb(255, 128, 0);
+}
+
 /* NAV */
 nav {
-    display:flex;
-    gap: 2rem;
-    padding: 2rem;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    /* display:flex; */
+    /* gap: 2rem; */
+    padding: 1rem;
     font-size: 2rem;
+}
+
+nav > div {
+    padding: 1rem;
+}
+
+nav .proyectos,
+nav .hoy {
+    padding-top: 3rem;
 }
 
 nav .proyectoElegido {
@@ -32,6 +74,8 @@ nav .proyectoElegido {
 }
 
 main {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
     border-style: solid;
 }
 
@@ -70,4 +114,12 @@ main .tareaTarjeta.prioridadMediana {
 
 main .tareaTarjeta.prioridadBaja {
     background-color: green;
+}
+
+footer {
+    margin: 0;
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+    background-color: #666666;
+    text-align: center;
 }
