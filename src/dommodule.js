@@ -115,20 +115,27 @@ function domMostrarTareas(proyectoElegido) {
     mainAborrar.remove();
     const main = document.createElement("main");
 
+    const divComandoTareas = document.createElement("div");
+    divComandoTareas.classList.add('comandoTareas');
+
     const descripcionProyecto = document.createElement("h2");
     descripcionProyecto.textContent = proyectos[proyectoElegido].descripcion;
-    main.appendChild(descripcionProyecto);
-
+    divComandoTareas.appendChild(descripcionProyecto);
+    
     const botonCrearTarea = document.createElement("button");
     botonCrearTarea.textContent = "Agregar Tarea Nueva";
+    botonCrearTarea.classList.add('crearTarea');
     botonCrearTarea.addEventListener("click", llamarCrearTarea);
-    main.appendChild(botonCrearTarea);
+    divComandoTareas.appendChild(botonCrearTarea);
 
     const botonEliminarProyecto = document.createElement("button");
     botonEliminarProyecto.textContent = "Eliminar Proyecto";
+    botonEliminarProyecto.classList.add('eliminarProyecto');
     botonEliminarProyecto.addEventListener("click", llamarEliminarProyecto);
-    main.appendChild(botonEliminarProyecto);
+    divComandoTareas.appendChild(botonEliminarProyecto);
         
+    main.appendChild(divComandoTareas);
+
     for(let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
         const tareaTarjeta = document.createElement("div");
         // Este ID es para q lo encuentre domVerEditar.
