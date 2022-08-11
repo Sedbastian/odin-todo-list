@@ -3,6 +3,19 @@
     src: url("./Raleway-VariableFont_wght.ttf") format('truetype');
 }
 
+:root {
+    --violeta-muy-oscuro: rgb(40, 0, 75);
+    --violeta-oscuro: rgb(50, 0, 100);
+    --violeta: rgb(64, 0, 128);
+    --violeta-suave: rgb(128, 0, 255);
+    --violeta-muy-suave: rgb(192, 128, 255);
+    --violeta-casi-blanco: rgb(229, 204, 254);
+
+    --naranja: rgb(255, 128, 0);
+    --naranja-oscuro: rgb(255, 60, 0);
+
+}
+
 * {
     font-family: "Raleway-Medium";
 }
@@ -15,7 +28,7 @@ body {
     grid-template-columns: max-content 1fr;
     grid-template-rows: min-content, 1fr, min-content;
 
-    background-color: rgb(64, 0, 128);
+    background-color: var(--violeta);
 }
 
 h1 {
@@ -25,8 +38,8 @@ h1 {
     margin: 0;
     padding: 1rem;
     text-align: center;
-    background-color: rgb(64, 0, 128);
-    color: rgb(255, 128, 0);
+    background-color: var(--violeta);
+    color: var(--naranja);
 }
 
 /* NAV */
@@ -39,7 +52,7 @@ nav {
     grid-template-rows: min-content min-content min-content;
 
     padding: 1rem;
-    background-color: rgb(64, 0, 128);
+    background-color: var(--violeta);
     font-size: 2rem;
     color: white;
 }
@@ -77,7 +90,7 @@ nav .proyectos {
     padding: 1rem;
     border-radius: 1rem;
 
-    background-color: rgb(50, 0, 100);
+    background-color: var(--violeta-oscuro);
 }
 
 nav .proyectos .tituloProyectos {
@@ -90,14 +103,14 @@ nav .proyectos .comandoProyectos {
     flex-direction: column;
     padding: 1rem;
     border-radius: 1rem;
-    background-color: rgb(40, 0, 75);
+    background-color: var(--violeta-muy-oscuro);
 }
 
 nav .proyectos .comandoProyectos .proyectoNuevo {
     margin-bottom: .5rem;
     padding: 1rem;
     border-radius: 3rem;
-    background-color: rgb(255, 128, 0);
+    background-color: var(--naranja);
     color: white;
     font-size: 1rem;
     font-weight: bold;
@@ -106,10 +119,15 @@ nav .proyectos .comandoProyectos .proyectoNuevo {
 nav .proyectos .comandoProyectos .eliminarTodo {
     padding: .5rem;
     border-radius: 3rem;
-    background-color: rgb(255, 60, 0);
+    background-color: var(--naranja-oscuro);
     color: white;
     font-size: 1rem;
     font-weight: bold;
+}
+
+.proyectoNuevo:hover,
+.eliminarTodo:hover {
+    box-shadow: 0 0 1rem var(--violeta-casi-blanco);
 }
 
 nav .proyectoNav {
@@ -120,7 +138,7 @@ nav .proyectoNav {
 }
 
 nav .proyectoElegido {
-    background-color: rgb(128, 0, 255);
+    background-color: var(--violeta-suave);
     color: white;
 }
 
@@ -129,9 +147,9 @@ main {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
 
-    box-shadow: 0.15rem 0.15rem 1rem rgb(150, 150, 150);
+    box-shadow: 0 0 1rem rgb(0, 0, 0);
     border-radius: 1rem;
-    background-color: rgb(0, 64, 0);
+    background-color: var(--violeta-muy-suave);
 }
 
 main .comandoTareas {
@@ -140,16 +158,16 @@ main .comandoTareas {
     padding: 1rem;
 
     border-radius: 1rem;
-    background-color: rgb(0, 64, 0);
+    background-color: var(--violeta-muy-suave);
     
-    color: white;
+    color: var(--violeta);
     font-weight: 300;
 }
 
 main .comandoTareas .crearTarea {
     margin: 1rem;
     border-radius: 2rem;
-    background-color: rgb(255, 128, 0);
+    background-color: var(--naranja);
     color: white;
     font-size: 1rem;
     font-weight: bold;
@@ -158,29 +176,35 @@ main .comandoTareas .crearTarea {
 main .comandoTareas .eliminarProyecto {
     margin: 1rem;
     border-radius: 2rem;
-    background-color: rgb(255, 60, 0);
+    background-color: var(--naranja-oscuro);
     color: white;
     font-size: 1rem;
     font-weight: bold;
 }
 
-button:hover {
-    box-shadow: 0.15rem 0.15rem 1rem rgb(150, 150, 150);
+.crearTarea:hover,
+.eliminarProyecto:hover {
+    box-shadow: 0 0 1rem var(--violeta);
 }
 
 main .tareaTarjeta {
     margin: 1rem;
-
+    padding: .5rem;
     border-style: solid;
     border-radius: 1rem;
 }
 
+main .tareaTarjeta h3 {
+    margin-top: 0;
+    
+}
+
 main .tareaTarjeta.prioridadAlta {
-    background-color: red;
+    background-color: var(--naranja-oscuro);
 }
 
 main .tareaTarjeta.prioridadMediana {
-    background-color: yellow;
+    background-color: var(--naranja);
 }
 
 main .tareaTarjeta.prioridadBaja {

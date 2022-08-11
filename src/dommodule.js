@@ -123,7 +123,7 @@ function domMostrarTareas(proyectoElegido) {
     divComandoTareas.appendChild(descripcionProyecto);
     
     const botonCrearTarea = document.createElement("button");
-    botonCrearTarea.textContent = "Agregar Tarea Nueva";
+    botonCrearTarea.textContent = "Agregar Tarea";
     botonCrearTarea.classList.add('crearTarea');
     botonCrearTarea.addEventListener("click", llamarCrearTarea);
     divComandoTareas.appendChild(botonCrearTarea);
