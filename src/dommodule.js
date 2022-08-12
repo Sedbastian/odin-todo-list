@@ -122,12 +122,6 @@ function domMostrarTareas(proyectoElegido) {
     descripcionProyecto.textContent = proyectos[proyectoElegido].descripcion;
     divComandoTareas.appendChild(descripcionProyecto);
     
-    const botonCrearTarea = document.createElement("button");
-    botonCrearTarea.textContent = "Agregar Tarea";
-    botonCrearTarea.classList.add('crearTarea');
-    botonCrearTarea.addEventListener("click", llamarCrearTarea);
-    divComandoTareas.appendChild(botonCrearTarea);
-
     const botonEliminarProyecto = document.createElement("button");
     botonEliminarProyecto.textContent = "Eliminar Proyecto";
     botonEliminarProyecto.classList.add('eliminarProyecto');
@@ -155,12 +149,13 @@ function domMostrarTareas(proyectoElegido) {
         
         const vencimiento = document.createElement("div");
         vencimiento.classList.add("vencimiento");
-        vencimiento.textContent = `Vencimiento: ${format(proyectos[proyectoElegido].tareas[i].vencimiento, "d 'de' MMMM yyyy", {locale: es})}.  Vence en: ${formatDistanceToNow(proyectos[proyectoElegido].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
+        vencimiento.textContent = `Vence en: ${formatDistanceToNow(proyectos[proyectoElegido].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
 
         const botonVerEditar = document.createElement("button");
         botonVerEditar.setAttribute("data-proyecto", `${proyectoElegido}`)
         botonVerEditar.setAttribute("data-tarea", `${i}`);
         botonVerEditar.setAttribute("id", `tarea${i}`);
+        botonVerEditar.classList.add("botonVerEditar");
         botonVerEditar.textContent = "Ver detalles / Editar";
         botonVerEditar.addEventListener("click", llamarVerEditar);
 
@@ -169,6 +164,12 @@ function domMostrarTareas(proyectoElegido) {
         tareaTarjeta.appendChild(botonVerEditar);
         main.appendChild(tareaTarjeta);        
     };
+
+    const botonCrearTarea = document.createElement("button");
+    botonCrearTarea.textContent = "Agregar Tarea";
+    botonCrearTarea.classList.add('botonCrearTarea');
+    botonCrearTarea.addEventListener("click", llamarCrearTarea);
+    main.appendChild(botonCrearTarea);
 
     const cuerpi = document.querySelector("body");
     cuerpi.appendChild(main);
@@ -179,7 +180,9 @@ function domMostrarTareas(proyectoElegido) {
             unProyecto.classList.add("proyectoElegido");
         };
     });
-    document.querySelector(".tareasSueltas").classList.remove("proyectoElegido");
+    if (proyectoElegido !== 'Tareas Sueltas') {
+        document.querySelector(".tareasSueltas").classList.remove("proyectoElegido");
+    };
 };
 
 function domCrearTarea(proyectoElegido) {
@@ -214,13 +217,15 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const tarjetaAeditar = document.querySelector(`#tarea${numeroTarea}`);
 
-    tarjetaAeditar.querySelectorAll("*").forEach(elemento=>elemento.remove())
+    tarjetaAeditar.querySelectorAll("*").forEach(elemento=>elemento.remove());
 
     const formulario = document.createElement("div");
+    formulario.classList.add("formularioVerEditar");
     
     const labelTitulo = document.createElement("label");
     labelTitulo.setAttribute("for", "titulo");
     labelTitulo.textContent = "Titulo:";
+    labelTitulo.classList.add('labelTitulo');
     formulario.appendChild(labelTitulo);
 
     const inputTitulo = document.createElement("input");
@@ -232,9 +237,11 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     // Fieldset de Prioridad:
     const fieldsetPrioridad = document.createElement("fieldset");
+    fieldsetPrioridad.classList.add('fieldsetPrioridad');
 
     const leyendaPrioridad = document.createElement("legend");
     leyendaPrioridad.textContent = "Prioridad:";
+    leyendaPrioridad.classList.add('leyendaPrioridad');
     fieldsetPrioridad.appendChild(leyendaPrioridad);
 
     const divAlta = document.createElement("div");
@@ -296,6 +303,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const labelDescripcion = document.createElement("label");
     labelDescripcion.setAttribute("for", "descripcion");
+    labelDescripcion.classList.add('labelDescripcion');
     labelDescripcion.textContent = "Descripción:";
     formulario.appendChild(labelDescripcion);
 
@@ -306,6 +314,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const labelVencimiento = document.createElement("label");
     labelVencimiento.setAttribute("for", "vencimiento");
+    labelVencimiento.classList.add('labelVencimiento')
     labelVencimiento.textContent = "Vencimiento:";
     formulario.appendChild(labelVencimiento);
 
@@ -317,6 +326,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const labelNotas = document.createElement("label");
     labelNotas.setAttribute("for", "notas");
+    labelNotas.classList.add('labelNotas');
     labelNotas.textContent = "Notas:";
     formulario.appendChild(labelNotas);
 
@@ -325,18 +335,21 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     textAreaNotas.value = proyectos[proyectoElegido].tareas[numeroTarea].notas;
     formulario.appendChild(textAreaNotas);
     
+    const comandoFormulario = document.createElement('div');
+
     const botonGuardarCambios = document.createElement("button");
     botonGuardarCambios.textContent = "Guardar Cambios";
     botonGuardarCambios.addEventListener("click", llamarGuardarCambios);
-    formulario.appendChild(botonGuardarCambios);
+    comandoFormulario.appendChild(botonGuardarCambios);
 
     const botonEliminarTarea = document.createElement("button");
     botonEliminarTarea.textContent = "Eliminar Tarea";
     botonEliminarTarea.classList.add("eliminarTarea");
     botonEliminarTarea.addEventListener("click", llamarEliminarTarea);
-    formulario.appendChild(botonEliminarTarea);
+    comandoFormulario.appendChild(botonEliminarTarea);
 
     tarjetaAeditar.appendChild(formulario);
+    tarjetaAeditar.appendChild(comandoFormulario);
 };
 
 export {
