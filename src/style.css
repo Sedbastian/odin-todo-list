@@ -293,9 +293,18 @@ main .formularioVerEditar #titulo {
     font-weight: bold;
 }
 
-main .formularioVerEditar .fieldsetPrioridad {
+main .formularioVerEditar .divPrioridadVencimiento {
     grid-column: 1 / 3;
     grid-row: 2 / 3;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+main .formularioVerEditar .fieldsetPrioridad {
+    grid-column: 1 / 2;
 
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -304,6 +313,34 @@ main .formularioVerEditar .fieldsetPrioridad {
 }
 
 main .formularioVerEditar .leyendaPrioridad {
+    font-weight: bold;
+}
+
+main .formularioVerEditar .divVencimiento {
+    grid-column: 2 / 3;
+    justify-self: start;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+main .formularioVerEditar .labelVencimiento {
+    margin: 1rem;
+
+    font-weight: bold;
+}
+
+main .formularioVerEditar #vencimiento {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border-style: none;
+    background-color: var(--violeta);
+    color: var(--violeta-muy-suave);
+    font-size: 1rem;
     font-weight: bold;
 }
 
@@ -320,34 +357,6 @@ main .formularioVerEditar .labelDescripcion {
 main .formularioVerEditar #descripcion {
     grid-column: 2 / 3;
     grid-row: 3 / 4;
-
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border-style: none;
-    background-color: var(--violeta);
-    color: var(--violeta-muy-suave);
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-main .formularioVerEditar .labelVencimiento {
-    grid-column: 1 / 2;
-    grid-row: 4 / 5;
-
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-
-    font-weight: bold;
-}
-
-main .formularioVerEditar #vencimiento {
-    grid-column: 2 / 3;
-    grid-row: 4 / 5;
-    justify-self: start;
 
     margin-top: 1rem;
     margin-bottom: 1rem;

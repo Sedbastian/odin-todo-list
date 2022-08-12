@@ -256,6 +256,10 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     labelAlta.textContent = "Alta";
     divAlta.appendChild(labelAlta);
 
+
+    const divPrioridadVencimiento = document.createElement('div');
+    divPrioridadVencimiento.classList.add('divPrioridadVencimiento');
+
     // setAttribute("name", `prioridad${numeroTarea}`) es para q cuando hay más d una tarea editándose, no tengan el mismo name.
     const inputRadioAlta = document.createElement("input");
     inputRadioAlta.setAttribute("type", "radio");
@@ -304,8 +308,26 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     fieldsetPrioridad.appendChild(divAlta);
     fieldsetPrioridad.appendChild(divMediana);
     fieldsetPrioridad.appendChild(divBaja);
-    formulario.appendChild(fieldsetPrioridad);
+    divPrioridadVencimiento.appendChild(fieldsetPrioridad);
     // Fin Fieldset de Prioridad.
+
+    const divVencimiento = document.createElement('div');
+    divVencimiento.classList.add('divVencimiento');
+    
+    const labelVencimiento = document.createElement("label");
+    labelVencimiento.setAttribute("for", "vencimiento");
+    labelVencimiento.classList.add('labelVencimiento')
+    labelVencimiento.textContent = "Vencimiento:";
+    divVencimiento.appendChild(labelVencimiento);
+
+    const inputDateVencimiento = document.createElement("input");
+    inputDateVencimiento.setAttribute("type", "date");
+    inputDateVencimiento.setAttribute("id", "vencimiento");
+    inputDateVencimiento.value = format(proyectos[proyectoElegido].tareas[numeroTarea].vencimiento, "yyyy-MM-dd");
+    divVencimiento.appendChild(inputDateVencimiento);
+
+    divPrioridadVencimiento.appendChild(divVencimiento);
+    formulario.appendChild(divPrioridadVencimiento);
 
     const labelDescripcion = document.createElement("label");
     labelDescripcion.setAttribute("for", "descripcion");
@@ -318,17 +340,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     textAreaDescripcion.value = proyectos[proyectoElegido].tareas[numeroTarea].descripcion;
     formulario.appendChild(textAreaDescripcion);
 
-    const labelVencimiento = document.createElement("label");
-    labelVencimiento.setAttribute("for", "vencimiento");
-    labelVencimiento.classList.add('labelVencimiento')
-    labelVencimiento.textContent = "Vencimiento:";
-    formulario.appendChild(labelVencimiento);
 
-    const inputDateVencimiento = document.createElement("input");
-    inputDateVencimiento.setAttribute("type", "date");
-    inputDateVencimiento.setAttribute("id", "vencimiento");
-    inputDateVencimiento.value = format(proyectos[proyectoElegido].tareas[numeroTarea].vencimiento, "yyyy-MM-dd");
-    formulario.appendChild(inputDateVencimiento);
 
     const labelNotas = document.createElement("label");
     labelNotas.setAttribute("for", "notas");
