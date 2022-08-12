@@ -351,14 +351,42 @@ main .formularioVerEditar #notas {
     font-size: 1rem;
     font-weight: bold;
 }
+
+main .comandoFormulario {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+main .comandoFormulario .guardarCambios {
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: var(--naranja);
+    color: var(--violeta-muy-oscuro);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+
+main .comandoFormulario .eliminarTarea {
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: var(--naranja-oscuro);
+    color: var(--violeta-muy-oscuro);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+main .comandoFormulario .guardarCambios:hover,
+main .comandoFormulario .eliminarTarea:hover {
+    box-shadow: 0 0 1rem var(--violeta);
+}
 /* FIN FORMULARIO VER EDITAR */
-
-
 
 main .botonCrearTarea {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    align-self: center;
+    /* align-self: center; */
 
     margin: 1rem;
     padding: 0.5rem;

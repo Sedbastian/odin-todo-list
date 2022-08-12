@@ -251,10 +251,11 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     labelAlta.textContent = "Alta";
     divAlta.appendChild(labelAlta);
 
+    // setAttribute("name", `prioridad${numeroTarea}`) es para q cuando hay más d una tarea editándose, no tengan el mismo name.
     const inputRadioAlta = document.createElement("input");
     inputRadioAlta.setAttribute("type", "radio");
     inputRadioAlta.setAttribute("id", "alta");
-    inputRadioAlta.setAttribute("name", "prioridad");
+    inputRadioAlta.setAttribute("name", `prioridad${numeroTarea}`);
     inputRadioAlta.setAttribute("value", "alta");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Alta") {
         inputRadioAlta.setAttribute("checked", true);
@@ -271,7 +272,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     const inputRadioMediana = document.createElement("input");
     inputRadioMediana.setAttribute("type", "radio");
     inputRadioMediana.setAttribute("id", "mediana");
-    inputRadioMediana.setAttribute("name", "prioridad");
+    inputRadioMediana.setAttribute("name", `prioridad${numeroTarea}`);
     inputRadioMediana.setAttribute("value", "mediana");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Mediana") {
         inputRadioMediana.setAttribute("checked", true);
@@ -288,7 +289,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     const inputRadioBaja = document.createElement("input");
     inputRadioBaja.setAttribute("type", "radio");
     inputRadioBaja.setAttribute("id", "baja");
-    inputRadioBaja.setAttribute("name", "prioridad");
+    inputRadioBaja.setAttribute("name", `prioridad${numeroTarea}`);
     inputRadioBaja.setAttribute("value", "baja");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Baja") {
         inputRadioBaja.setAttribute("checked", true);
@@ -336,13 +337,16 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     formulario.appendChild(textAreaNotas);
     
     const comandoFormulario = document.createElement('div');
+    comandoFormulario.classList.add('comandoFormulario');
 
     const botonGuardarCambios = document.createElement("button");
+    botonGuardarCambios.classList.add('guardarCambios');
     botonGuardarCambios.textContent = "Guardar Cambios";
     botonGuardarCambios.addEventListener("click", llamarGuardarCambios);
     comandoFormulario.appendChild(botonGuardarCambios);
 
     const botonEliminarTarea = document.createElement("button");
+    botonEliminarTarea.classList.add('eliminarTarea');
     botonEliminarTarea.textContent = "Eliminar Tarea";
     botonEliminarTarea.classList.add("eliminarTarea");
     botonEliminarTarea.addEventListener("click", llamarEliminarTarea);
