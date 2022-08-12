@@ -32,13 +32,13 @@ function domCrearProyecto() {
         const titulo = `${inputTitulo.value}`;
         const descripcion = `${inputDescripcion.value}`;
         crearProyecto(titulo, descripcion);
-        cuerpi.removeChild(divFormulario);
+        cuerpi.removeChild(divBlured);
         domNavProyectos(titulo);
         domMostrarTareas(titulo);
     };
 
     function cancelarFormulario() {
-        cuerpi.removeChild(divFormulario);
+        cuerpi.removeChild(divBlured);
     }
 
     const divFormulario = document.createElement("div");
@@ -80,8 +80,13 @@ function domCrearProyecto() {
     botonCancelar.textContent = "Cancelar";
     divFormulario.appendChild(botonCancelar);
 
+    const divBlured = document.createElement('div');
+    divBlured.classList.add('divBlured');
+
     const cuerpi = document.querySelector("body");
-    cuerpi.appendChild(divFormulario);
+    
+    divBlured.appendChild(divFormulario);
+    cuerpi.appendChild(divBlured);
 };
 
 function domMostrarTareasSueltas() {
