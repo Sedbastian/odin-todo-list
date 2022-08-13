@@ -1,5 +1,5 @@
 import {proyectos, crearProyecto, eliminarProyecto, crearTarea, actualizarTarea, eliminarTarea} from "./index.js";
-import { format, formatDistanceToNow } from 'date-fns';
+import { format, formatDistanceToNow, add } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 function domNavProyectos(proyectoElegido) {
@@ -70,13 +70,13 @@ function domCrearProyecto() {
 
     const botonCrear = document.createElement("button");
     botonCrear.addEventListener("click", llamarCrearProyecto);
-    botonCrear.setAttribute("class", "botonFormulario");
+    botonCrear.classList.add('botonCrearProyecto');
     botonCrear.textContent = "Crear Proyecto";
     divFormulario.appendChild(botonCrear);
 
     const botonCancelar = document.createElement("button");
     botonCancelar.addEventListener("click", cancelarFormulario);
-    botonCancelar.setAttribute("class", "botonFormulario");
+    botonCancelar.classList.add('botonCancelar');
     botonCancelar.textContent = "Cancelar";
     divFormulario.appendChild(botonCancelar);
 
@@ -91,7 +91,82 @@ function domCrearProyecto() {
 
 function domMostrarTareasSueltas() {
     domMostrarTareas("Tareas Sueltas");
-    document.querySelector(".tareasSueltas").classList.add("proyectoElegido");
+
+    document.querySelectorAll('.proyectoElegido').forEach(proyecto => {
+        proyecto.classList.remove('proyectoElegido');
+    });
+    document.querySelector('.tareasSueltas').classList.add('proyectoElegido');
+};
+
+function domMostrarTareasHoy() {
+
+    function llamarVerEditar(event) {
+        const tituloProyecto = event.target.getAttribute("data-proyecto");
+        const numeroTarea = event.target.getAttribute("data-tarea");
+        domVerEditar(tituloProyecto, numeroTarea);
+    };
+
+    const mainAborrar = document.querySelector("main");
+    mainAborrar.remove();
+    const main = document.createElement("main");
+
+    const hoyEs = new Date();
+    
+    for (const key of Object.keys(proyectos)) {
+        
+        for (let i = 0; i < proyectos[key].tareas.length; i++) {
+            
+            if (add(hoyEs, {days: 1,}) > proyectos[key].tareas[i].vencimiento) {
+                const tareaTarjeta = document.createElement("div");
+                tareaTarjeta.setAttribute("data-proyecto", `${key}`);
+                // Este ID es para q lo encuentre domVerEditar.
+                tareaTarjeta.setAttribute("id", `tarea${i}`);
+                tareaTarjeta.setAttribute('data-hoy', 'si');
+                tareaTarjeta.classList.add("tareaTarjeta");
+                
+                if (proyectos[key].tareas[i].prioridad === "Alta") {
+                    tareaTarjeta.classList.add("prioridadAlta");
+                } else if (proyectos[key].tareas[i].prioridad === "Mediana") {
+                    tareaTarjeta.classList.add("prioridadMediana");
+                } else if (proyectos[key].tareas[i].prioridad === "Baja") {
+                    tareaTarjeta.classList.add("prioridadBaja");
+                };
+
+                const tituloH3 = document.createElement("h3");
+                tituloH3.textContent = proyectos[key].tareas[i].titulo;
+                
+                const vencimiento = document.createElement("div");
+                vencimiento.classList.add("vencimiento");
+                vencimiento.textContent = `Vence en: ${formatDistanceToNow(proyectos[key].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
+
+                const botonVerEditar = document.createElement("button");
+                botonVerEditar.setAttribute("data-proyecto", `${key}`);
+                botonVerEditar.setAttribute("data-tarea", `${i}`);
+                botonVerEditar.setAttribute("id", `tarea${i}`);
+                botonVerEditar.classList.add("botonVerEditar");
+                botonVerEditar.textContent = "Ver detalles / Editar";
+                botonVerEditar.addEventListener("click", llamarVerEditar);
+
+                tareaTarjeta.appendChild(tituloH3);
+                tareaTarjeta.appendChild(vencimiento);   
+                tareaTarjeta.appendChild(botonVerEditar);
+                main.appendChild(tareaTarjeta);
+                
+                const cuerpi = document.querySelector('body');
+                cuerpi.appendChild(main);
+            };
+        };
+    };
+
+    const proyectosElegidos = document.querySelectorAll('.proyectoElegido');
+    proyectosElegidos.forEach(proyecto => {
+        proyecto.classList.remove('proyectoElegido');
+    });
+    document.querySelector('.hoy').classList.add('proyectoElegido');
+};
+
+function domMostrarTareasSemana() {
+
 };
 
 function domMostrarTareas(proyectoElegido) {
@@ -135,8 +210,9 @@ function domMostrarTareas(proyectoElegido) {
         
     main.appendChild(divComandoTareas);
 
-    for(let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
+    for (let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
         const tareaTarjeta = document.createElement("div");
+        tareaTarjeta.setAttribute("data-proyecto", `${proyectoElegido}`);
         // Este ID es para q lo encuentre domVerEditar.
         tareaTarjeta.setAttribute("id", `tarea${i}`);
         tareaTarjeta.classList.add("tareaTarjeta");
@@ -178,16 +254,16 @@ function domMostrarTareas(proyectoElegido) {
 
     const cuerpi = document.querySelector("body");
     cuerpi.appendChild(main);
-    const proyectosListado = document.querySelectorAll(".proyectoNav")
-    proyectosListado.forEach(unProyecto=>unProyecto.classList.remove("proyectoElegido"))
-    proyectosListado.forEach(unProyecto=>{
+    
+    document.querySelectorAll('.proyectoElegido').forEach(proyecto => {
+        proyecto.classList.remove('proyectoElegido');
+    });
+        
+    document.querySelectorAll(".proyectoNav").forEach(unProyecto=>{
         if(unProyecto.textContent === proyectoElegido) {
             unProyecto.classList.add("proyectoElegido");
         };
     });
-    if (proyectoElegido !== 'Tareas Sueltas') {
-        document.querySelector(".tareasSueltas").classList.remove("proyectoElegido");
-    };
 };
 
 function domCrearTarea(proyectoElegido) {
@@ -210,7 +286,9 @@ function domVerEditar(proyectoElegido, numeroTarea) {
             prioridad = "Baja";
         };
         actualizarTarea(proyectoElegido, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+"T00:00:00"), prioridad, textAreaNotas.value, checklistA);
-        domMostrarTareas(proyectoElegido);
+        if (tarjetaAeditar.getAttribute('data-hoy') === 'si') {
+            domMostrarTareasHoy();
+        } else { domMostrarTareas(proyectoElegido); };
     };
 
     function llamarEliminarTarea() {
@@ -220,9 +298,17 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         };
     };
 
-    const tarjetaAeditar = document.querySelector(`#tarea${numeroTarea}`);
-
-    tarjetaAeditar.querySelectorAll("*").forEach(elemento=>elemento.remove());
+    // De todas las tareaTarjeta en el document, editar la q coincida proyectoElegido y numeroTarea:
+    // Esto es para poder usar esta funcion desde domMostrarTareasHoy y domMostrarTareasSemana.
+    const tarjetasEnDocument = document.querySelectorAll('.tareaTarjeta');
+    let tarjetaAeditar;
+    
+    tarjetasEnDocument.forEach(tarjeta => {
+        if (tarjeta.getAttribute('data-proyecto') === proyectoElegido && tarjeta.getAttribute('id') === `tarea${numeroTarea}`) {
+            tarjeta.querySelectorAll("*").forEach(elemento=>elemento.remove());
+            tarjetaAeditar = tarjeta;
+        };
+    });
 
     const formulario = document.createElement("div");
     formulario.classList.add("formularioVerEditar");
@@ -377,6 +463,8 @@ export {
     domNavProyectos,
     domMostrarTareasSueltas,
     domMostrarTareas,
+    domMostrarTareasHoy,
+    domMostrarTareasSemana,
     domCrearProyecto,
     domCrearTarea,
 };

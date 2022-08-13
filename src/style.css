@@ -83,9 +83,6 @@ nav .proyectos {
     grid-column: 1 / 2;
     grid-row: 3 / 4;
 
-    /* display: flex;
-    flex-direction: column; */
-
     margin-top: 3rem;
     padding: 1rem;
     border-radius: 1rem;
@@ -161,16 +158,54 @@ nav .proyectos .comandoProyectos .eliminarTodo {
 
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
     
+    gap: 1rem;
     padding: 2rem;
-    background-color: var(--naranja);
+    
+    background-color: var(--violeta-muy-oscuro);
     border-style: solid;
     border-radius: 1rem;
-    border-color: var(--violeta-oscuro);
+    border-color: var(--naranja);
     border-width: 0.3rem;
     
-    color: var(--violeta-oscuro);
+    color: var(--violeta-muy-suave);
+    font-weight: bold;
+}
+
+.divFormularioProyecto input {
+    padding: 0.5rem;
+    border-style: none;
+    border-radius: 1rem;
+    background-color: var(--violeta);
+    color: var(--violeta-casi-blanco);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.divFormularioProyecto .botonCrearProyecto {
+    margin: 1rem;
+    margin-bottom: 0;
+    padding: 0.5rem;
+    border-radius: 3rem;
+    background-color: var(--naranja);
+    color: var(--violeta-muy-oscuro);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.divFormularioProyecto .botonCancelar {
+    margin: 1rem;
+    padding: 0.5rem;
+    border-radius: 3rem;
+    background-color: var(--naranja-oscuro);
+    color: var(--violeta-muy-oscuro);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.divFormularioProyecto .botonCrearProyecto:hover,
+.divFormularioProyecto .botonCancelar:hover {
+    box-shadow: 0 0 1rem var(--violeta-casi-blanco);
 }
 
 /* MAIN */

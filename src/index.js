@@ -1,5 +1,5 @@
 import './style.css';
-import {domNavProyectos, domMostrarTareasSueltas, domCrearProyecto, } from "./dommodule.js";
+import {domNavProyectos, domMostrarTareasSueltas, domMostrarTareasHoy, domMostrarTareasSemana, domCrearProyecto } from "./dommodule.js";
 import { parseISO } from 'date-fns';
 
 // Llamada por crearProyecto();
@@ -76,9 +76,11 @@ function eliminarProyectosGuardados() {
 
 function iniciar() {
     document.querySelector(".tareasSueltas").addEventListener("click", domMostrarTareasSueltas);
+    document.querySelector('.hoy').addEventListener('click', domMostrarTareasHoy);
+    document.querySelector('.semana').addEventListener('click', domMostrarTareasSemana);
     document.querySelector(".proyectoNuevo").addEventListener("click", domCrearProyecto);
     document.querySelector(".eliminarTodo").addEventListener("click", eliminarProyectosGuardados);
-
+    
     cargarProyectos();
     if (!proyectos["Tareas Sueltas"]) {
         // Proyecto predeterminado "Tareas Sueltas":
