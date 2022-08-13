@@ -121,7 +121,7 @@ function domMostrarTareasHoy() {
                 tareaTarjeta.setAttribute("data-proyecto", `${key}`);
                 // Este ID es para q lo encuentre domVerEditar.
                 tareaTarjeta.setAttribute("id", `tarea${i}`);
-                tareaTarjeta.setAttribute('data-hoy', 'si');
+                tareaTarjeta.setAttribute('data-porVencimiento', 'hoy');
                 tareaTarjeta.classList.add("tareaTarjeta");
                 
                 if (proyectos[key].tareas[i].prioridad === "Alta") {
@@ -167,6 +167,69 @@ function domMostrarTareasHoy() {
 
 function domMostrarTareasSemana() {
 
+    function llamarVerEditar(event) {
+        const tituloProyecto = event.target.getAttribute("data-proyecto");
+        const numeroTarea = event.target.getAttribute("data-tarea");
+        domVerEditar(tituloProyecto, numeroTarea);
+    };
+
+    const mainAborrar = document.querySelector("main");
+    mainAborrar.remove();
+    const main = document.createElement("main");
+
+    const hoyEs = new Date();
+    
+    for (const key of Object.keys(proyectos)) {
+        
+        for (let i = 0; i < proyectos[key].tareas.length; i++) {
+            
+            if (add(hoyEs, {days: 7,}) > proyectos[key].tareas[i].vencimiento) {
+                const tareaTarjeta = document.createElement("div");
+                tareaTarjeta.setAttribute("data-proyecto", `${key}`);
+                // Este ID es para q lo encuentre domVerEditar.
+                tareaTarjeta.setAttribute("id", `tarea${i}`);
+                tareaTarjeta.setAttribute('data-porVencimiento', 'semana');
+                tareaTarjeta.classList.add("tareaTarjeta");
+                
+                if (proyectos[key].tareas[i].prioridad === "Alta") {
+                    tareaTarjeta.classList.add("prioridadAlta");
+                } else if (proyectos[key].tareas[i].prioridad === "Mediana") {
+                    tareaTarjeta.classList.add("prioridadMediana");
+                } else if (proyectos[key].tareas[i].prioridad === "Baja") {
+                    tareaTarjeta.classList.add("prioridadBaja");
+                };
+
+                const tituloH3 = document.createElement("h3");
+                tituloH3.textContent = proyectos[key].tareas[i].titulo;
+                
+                const vencimiento = document.createElement("div");
+                vencimiento.classList.add("vencimiento");
+                vencimiento.textContent = `Vence en: ${formatDistanceToNow(proyectos[key].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
+
+                const botonVerEditar = document.createElement("button");
+                botonVerEditar.setAttribute("data-proyecto", `${key}`);
+                botonVerEditar.setAttribute("data-tarea", `${i}`);
+                botonVerEditar.setAttribute("id", `tarea${i}`);
+                botonVerEditar.classList.add("botonVerEditar");
+                botonVerEditar.textContent = "Ver detalles / Editar";
+                botonVerEditar.addEventListener("click", llamarVerEditar);
+
+                tareaTarjeta.appendChild(tituloH3);
+                tareaTarjeta.appendChild(vencimiento);   
+                tareaTarjeta.appendChild(botonVerEditar);
+                main.appendChild(tareaTarjeta);
+                
+                const cuerpi = document.querySelector('body');
+                cuerpi.appendChild(main);
+            };
+        };
+    };
+
+    const proyectosElegidos = document.querySelectorAll('.proyectoElegido');
+    proyectosElegidos.forEach(proyecto => {
+        proyecto.classList.remove('proyectoElegido');
+    });
+    document.querySelector('.semana').classList.add('proyectoElegido');
 };
 
 function domMostrarTareas(proyectoElegido) {
@@ -259,11 +322,15 @@ function domMostrarTareas(proyectoElegido) {
         proyecto.classList.remove('proyectoElegido');
     });
         
-    document.querySelectorAll(".proyectoNav").forEach(unProyecto=>{
+    document.querySelectorAll(".proyectoNav").forEach(unProyecto => {
         if(unProyecto.textContent === proyectoElegido) {
             unProyecto.classList.add("proyectoElegido");
         };
     });
+
+    if (proyectoElegido === 'Tareas Sueltas') {
+        document.querySelector('.tareasSueltas').classList.add('proyectoElegido');
+    };
 };
 
 function domCrearTarea(proyectoElegido) {
@@ -286,8 +353,10 @@ function domVerEditar(proyectoElegido, numeroTarea) {
             prioridad = "Baja";
         };
         actualizarTarea(proyectoElegido, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+"T00:00:00"), prioridad, textAreaNotas.value, checklistA);
-        if (tarjetaAeditar.getAttribute('data-hoy') === 'si') {
+        if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'hoy') {
             domMostrarTareasHoy();
+        } else if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'semana') {
+            domMostrarTareasSemana();
         } else { domMostrarTareas(proyectoElegido); };
     };
 
