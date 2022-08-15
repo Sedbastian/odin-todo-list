@@ -5,7 +5,6 @@ import { parseISO } from 'date-fns';
 // Llamada por crearProyecto();
 function fabricarProyecto (titulo, descripcion) {
     const tareas = [];
-    const checklist = {};
     const fabricarTarea = function (titulo, descripcion, vencimiento, prioridad, notas, checklist) {
         tareas.push({titulo, descripcion, vencimiento, prioridad, notas, checklist});
     };
@@ -26,7 +25,8 @@ function eliminarProyecto(proyectoElegido) {
 
 // A esta funcion la termina llamando el eventListener del boton crearTarea.
 function crearTarea(proyecto, titulo, descripcion, vencimiento, prioridad, notas, checklist) {
-    proyectos[proyecto].fabricarTarea(titulo, descripcion, vencimiento, prioridad, notas, checklist);
+    const checklistA = {};
+    proyectos[proyecto].fabricarTarea(titulo, descripcion, vencimiento, prioridad, notas, checklistA);
     guardarProyectos();
 };
 

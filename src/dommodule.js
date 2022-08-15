@@ -119,6 +119,7 @@ function domMostrarTareasHoy() {
             if (add(hoyEs, {days: 1,}) > proyectos[key].tareas[i].vencimiento) {
                 const tareaTarjeta = document.createElement("div");
                 tareaTarjeta.setAttribute("data-proyecto", `${key}`);
+                tareaTarjeta.setAttribute('data-tarea', i);
                 // Este ID es para q lo encuentre domVerEditar.
                 tareaTarjeta.setAttribute("id", `tarea${i}`);
                 tareaTarjeta.setAttribute('data-porVencimiento', 'hoy');
@@ -186,6 +187,7 @@ function domMostrarTareasSemana() {
             if (add(hoyEs, {days: 7,}) > proyectos[key].tareas[i].vencimiento) {
                 const tareaTarjeta = document.createElement("div");
                 tareaTarjeta.setAttribute("data-proyecto", `${key}`);
+                tareaTarjeta.setAttribute('data-tarea', i);
                 // Este ID es para q lo encuentre domVerEditar.
                 tareaTarjeta.setAttribute("id", `tarea${i}`);
                 tareaTarjeta.setAttribute('data-porVencimiento', 'semana');
@@ -360,7 +362,6 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         const arregloChecksVerificaciones = Array.from(divTareaEditada.querySelectorAll('.checkVerificacion'));
         
         let checklistA = {};
-        
         if (arregloVerificaciones) {
             for (let index = 0; index < arregloVerificaciones.length; index++) {
                 const verificacionAagregar = arregloVerificaciones[index].value;
@@ -377,28 +378,33 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         } else if (inputRadioBaja.checked) {
             prioridad = "Baja";
         };
+
         actualizarTarea(proyectoElegido, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+"T00:00:00"), prioridad, textAreaNotas.value, checklistA);
         if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'hoy') {
             domMostrarTareasHoy();
         } else if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'semana') {
             domMostrarTareasSemana();
-        } else { domMostrarTareas(proyectoElegido); };
-        console.log(proyectos[proyectoElegido].tareas[numeroTarea]);
+        } else { /* domMostrarTareas(proyectoElegido); */ };
     };
 
     let numeroVerificacion = 0;
     function agregarUnaVerificacion() {
+        const unaVerificacion = document.createElement('div');
+        unaVerificacion.classList.add('unaVerificacion');
+
         const nuevaVerificacion = document.createElement('input');
         nuevaVerificacion.setAttribute('type', 'checkbox');
         nuevaVerificacion.classList.add('checkVerificacion');
         nuevaVerificacion.classList.add(`verificacion${numeroVerificacion}`);
-        divVerificaciones.appendChild(nuevaVerificacion);
+        unaVerificacion.appendChild(nuevaVerificacion);
 
         const textoVerificacion = document.createElement('input');
         textoVerificacion.setAttribute('type', 'text');
         textoVerificacion.classList.add('verificacion');
         textoVerificacion.classList.add(`verificacion${numeroVerificacion}`);
-        divVerificaciones.appendChild(textoVerificacion);
+        unaVerificacion.appendChild(textoVerificacion);
+
+        divVerificaciones.appendChild(unaVerificacion);
 
         numeroVerificacion += 1;
         
@@ -429,7 +435,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     let tarjetaAeditar;
     
     tarjetasEnDocument.forEach(tarjeta => {
-        if (tarjeta.getAttribute('data-proyecto') === proyectoElegido && tarjeta.getAttribute('id') === `tarea${numeroTarea}`) {
+        if (tarjeta.getAttribute('data-proyecto') === proyectoElegido && tarjeta.getAttribute('data-tarea') === `${numeroTarea}`) {
             tarjeta.querySelectorAll("*").forEach(elemento=>elemento.remove());
             tarjetaAeditar = tarjeta;
         };
@@ -471,11 +477,9 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     const divPrioridadVencimiento = document.createElement('div');
     divPrioridadVencimiento.classList.add('divPrioridadVencimiento');
 
-    // setAttribute("name", `prioridad${numeroTarea}`) es para q cuando hay más d una tarea editándose, no tengan el mismo name.
     const inputRadioAlta = document.createElement("input");
     inputRadioAlta.setAttribute("type", "radio");
     inputRadioAlta.setAttribute("id", "alta");
-    inputRadioAlta.setAttribute("name", `prioridad${numeroTarea}`);
     inputRadioAlta.setAttribute("value", "alta");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Alta") {
         inputRadioAlta.setAttribute("checked", true);
@@ -492,7 +496,6 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     const inputRadioMediana = document.createElement("input");
     inputRadioMediana.setAttribute("type", "radio");
     inputRadioMediana.setAttribute("id", "mediana");
-    inputRadioMediana.setAttribute("name", `prioridad${numeroTarea}`);
     inputRadioMediana.setAttribute("value", "mediana");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Mediana") {
         inputRadioMediana.setAttribute("checked", true);
@@ -509,7 +512,6 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     const inputRadioBaja = document.createElement("input");
     inputRadioBaja.setAttribute("type", "radio");
     inputRadioBaja.setAttribute("id", "baja");
-    inputRadioBaja.setAttribute("name", `prioridad${numeroTarea}`);
     inputRadioBaja.setAttribute("value", "baja");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Baja") {
         inputRadioBaja.setAttribute("checked", true);
@@ -567,6 +569,32 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     const divVerificaciones = document.createElement('div');
     divVerificaciones.classList.add('divVerificaciones');
     formulario.appendChild(divVerificaciones);
+
+    if (proyectos[proyectoElegido].tareas[numeroTarea].checklist !== {}) {
+        
+        let numeroVerificacion = 0;
+        
+        for (const key of Object.keys(proyectos[proyectoElegido].tareas[numeroTarea].checklist)) {
+            const divUnaVerificacion = document.createElement('div');
+            divUnaVerificacion.classList.add('unaVerificacion');
+            
+            const nuevaVerificacion = document.createElement('input');
+            nuevaVerificacion.setAttribute('type', 'checkbox');
+            nuevaVerificacion.classList.add('checkVerificacion');
+            nuevaVerificacion.classList.add(`verificacion${numeroVerificacion}`);
+            nuevaVerificacion.checked = proyectos[proyectoElegido].tareas[numeroTarea].checklist[key];
+            divVerificaciones.appendChild(nuevaVerificacion);
+
+            const textoVerificacion = document.createElement('input');
+            textoVerificacion.setAttribute('type', 'text');
+            textoVerificacion.classList.add('verificacion');
+            textoVerificacion.classList.add(`verificacion${numeroVerificacion}`);
+            textoVerificacion.value = key;
+            divVerificaciones.appendChild(textoVerificacion);
+
+            numeroVerificacion += 1;
+        };
+    };
 
     // comandoFormulario
     const comandoFormulario = document.createElement('div');
