@@ -5,6 +5,7 @@ import { parseISO } from 'date-fns';
 // Llamada por crearProyecto();
 function fabricarProyecto (titulo, descripcion) {
     const tareas = [];
+    const checklist = {};
     const fabricarTarea = function (titulo, descripcion, vencimiento, prioridad, notas, checklist) {
         tareas.push({titulo, descripcion, vencimiento, prioridad, notas, checklist});
     };

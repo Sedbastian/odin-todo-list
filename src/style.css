@@ -408,7 +408,7 @@ main .formularioVerEditar #descripcion {
 
 main .formularioVerEditar .labelNotas {
     grid-column: 1 / 2;
-    grid-row: 5 / 6;
+    grid-row: 4 / 5;
 
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -418,7 +418,7 @@ main .formularioVerEditar .labelNotas {
 
 main .formularioVerEditar #notas {
     grid-column: 2 / 3;
-    grid-row: 5 / 6;
+    grid-row: 4 / 5;
 
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -433,12 +433,18 @@ main .formularioVerEditar #notas {
     font-weight: bold;
 }
 
+main .formularioVerEditar .divVerificaciones {
+    grid-column: 1 / 3;
+    grid-row: 5 / 6;
+}
+
 main .comandoFormulario {
     display: flex;
     justify-content: space-evenly;
 }
 
 main .comandoFormulario .guardarCambios {
+    margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 2rem;
     background-color: var(--naranja);
@@ -447,7 +453,18 @@ main .comandoFormulario .guardarCambios {
     font-weight: bold;
 }
 
+main .comandoFormulario .agregarVerificaciones {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: green;
+    color: var(--violeta-muy-oscuro);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
 main .comandoFormulario .eliminarTarea {
+    margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 2rem;
     background-color: var(--naranja-oscuro);

@@ -276,6 +276,7 @@ function domMostrarTareas(proyectoElegido) {
     for (let i = 0; i < proyectos[proyectoElegido].tareas.length; i++) {
         const tareaTarjeta = document.createElement("div");
         tareaTarjeta.setAttribute("data-proyecto", `${proyectoElegido}`);
+        tareaTarjeta.setAttribute("data-tarea", `${i}`);
         // Este ID es para q lo encuentre domVerEditar.
         tareaTarjeta.setAttribute("id", `tarea${i}`);
         tareaTarjeta.classList.add("tareaTarjeta");
@@ -342,8 +343,32 @@ function domCrearTarea(proyectoElegido) {
 
 function domVerEditar(proyectoElegido, numeroTarea) {
     
-    function llamarGuardarCambios() {
-        const checklistA = "";
+    function llamarActualizarTarea(event) {
+
+        const proyectoDondeGuardar = event.target.getAttribute('data-proyecto');
+        const tareaDondeGuardar = event.target.getAttribute('data-tarea');
+        const divTareas = document.querySelectorAll('.tareaTarjeta');
+        let divTareaEditada;
+
+        divTareas.forEach(element => {
+            if (element.getAttribute('data-proyecto') === proyectoDondeGuardar && element.getAttribute('data-tarea') === tareaDondeGuardar) {
+                divTareaEditada = element;
+            };
+        });
+
+        const arregloVerificaciones = Array.from(divTareaEditada.querySelectorAll('.verificacion'));
+        const arregloChecksVerificaciones = Array.from(divTareaEditada.querySelectorAll('.checkVerificacion'));
+        
+        let checklistA = {};
+        
+        if (arregloVerificaciones) {
+            for (let index = 0; index < arregloVerificaciones.length; index++) {
+                const verificacionAagregar = arregloVerificaciones[index].value;
+                const checkAagregar = arregloChecksVerificaciones[index].checked;
+                checklistA[verificacionAagregar] = checkAagregar;
+            };
+        };
+        
         let prioridad;
         if (inputRadioAlta.checked) {
             prioridad = "Alta";
@@ -358,6 +383,37 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         } else if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'semana') {
             domMostrarTareasSemana();
         } else { domMostrarTareas(proyectoElegido); };
+        console.log(proyectos[proyectoElegido].tareas[numeroTarea]);
+    };
+
+    let numeroVerificacion = 0;
+    function agregarUnaVerificacion() {
+        const nuevaVerificacion = document.createElement('input');
+        nuevaVerificacion.setAttribute('type', 'checkbox');
+        nuevaVerificacion.classList.add('checkVerificacion');
+        nuevaVerificacion.classList.add(`verificacion${numeroVerificacion}`);
+        divVerificaciones.appendChild(nuevaVerificacion);
+
+        const textoVerificacion = document.createElement('input');
+        textoVerificacion.setAttribute('type', 'text');
+        textoVerificacion.classList.add('verificacion');
+        textoVerificacion.classList.add(`verificacion${numeroVerificacion}`);
+        divVerificaciones.appendChild(textoVerificacion);
+
+        numeroVerificacion += 1;
+        
+    };
+
+    function agregarVerificaciones() {
+        const tituloVerificaciones = document.createElement('div');
+        tituloVerificaciones.textContent = 'Lista de Verificación:';
+        divVerificaciones.appendChild(tituloVerificaciones);
+
+        const botonAgregarUnaVerificacion = document.createElement('button');
+        botonAgregarUnaVerificacion.classList.add('agregarVerificación');
+        botonAgregarUnaVerificacion.textContent = 'Agregar Verificación';
+        botonAgregarUnaVerificacion.addEventListener('click', agregarUnaVerificacion);
+        divVerificaciones.appendChild(botonAgregarUnaVerificacion);        
     };
 
     function llamarEliminarTarea() {
@@ -367,7 +423,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         };
     };
 
-    // De todas las tareaTarjeta en el document, editar la q coincida proyectoElegido y numeroTarea:
+    // De todas las tareaTarjeta en el document, editar la q coincida proyectoElegido && numeroTarea:
     // Esto es para poder usar esta funcion desde domMostrarTareasHoy y domMostrarTareasSemana.
     const tarjetasEnDocument = document.querySelectorAll('.tareaTarjeta');
     let tarjetaAeditar;
@@ -484,6 +540,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     divPrioridadVencimiento.appendChild(divVencimiento);
     formulario.appendChild(divPrioridadVencimiento);
 
+
     const labelDescripcion = document.createElement("label");
     labelDescripcion.setAttribute("for", "descripcion");
     labelDescripcion.classList.add('labelDescripcion');
@@ -496,7 +553,6 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     formulario.appendChild(textAreaDescripcion);
 
 
-
     const labelNotas = document.createElement("label");
     labelNotas.setAttribute("for", "notas");
     labelNotas.classList.add('labelNotas');
@@ -507,22 +563,35 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     textAreaNotas.setAttribute("id", "notas");
     textAreaNotas.value = proyectos[proyectoElegido].tareas[numeroTarea].notas;
     formulario.appendChild(textAreaNotas);
-    
+
+    const divVerificaciones = document.createElement('div');
+    divVerificaciones.classList.add('divVerificaciones');
+    formulario.appendChild(divVerificaciones);
+
+    // comandoFormulario
     const comandoFormulario = document.createElement('div');
     comandoFormulario.classList.add('comandoFormulario');
 
     const botonGuardarCambios = document.createElement("button");
+    botonGuardarCambios.setAttribute('data-proyecto', proyectoElegido);
+    botonGuardarCambios.setAttribute('data-tarea', numeroTarea);
     botonGuardarCambios.classList.add('guardarCambios');
     botonGuardarCambios.textContent = "Guardar Cambios";
-    botonGuardarCambios.addEventListener("click", llamarGuardarCambios);
+    botonGuardarCambios.addEventListener("click", llamarActualizarTarea);
     comandoFormulario.appendChild(botonGuardarCambios);
+
+    const botonAgregarVerificaciones = document.createElement('button');
+    botonAgregarVerificaciones.classList.add('agregarVerificaciones');
+    botonAgregarVerificaciones.textContent = 'Agregar Lista de Verificación';
+    botonAgregarVerificaciones.addEventListener('click', agregarVerificaciones);
+    comandoFormulario.appendChild(botonAgregarVerificaciones);
 
     const botonEliminarTarea = document.createElement("button");
     botonEliminarTarea.classList.add('eliminarTarea');
     botonEliminarTarea.textContent = "Eliminar Tarea";
-    botonEliminarTarea.classList.add("eliminarTarea");
     botonEliminarTarea.addEventListener("click", llamarEliminarTarea);
     comandoFormulario.appendChild(botonEliminarTarea);
+
 
     tarjetaAeditar.appendChild(formulario);
     tarjetaAeditar.appendChild(comandoFormulario);
