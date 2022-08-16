@@ -133,12 +133,18 @@ function domMostrarTareasHoy() {
                     tareaTarjeta.classList.add("prioridadBaja");
                 };
 
+                const proyectoH2 = document.createElement('h2');
+                proyectoH2.textContent = `Del Proyecto: "${key}"`;
+                tareaTarjeta.appendChild(proyectoH2);
+
                 const tituloH3 = document.createElement("h3");
                 tituloH3.textContent = proyectos[key].tareas[i].titulo;
-                
+                tareaTarjeta.appendChild(tituloH3);
+
                 const vencimiento = document.createElement("div");
                 vencimiento.classList.add("vencimiento");
                 vencimiento.textContent = `Vence en: ${formatDistanceToNow(proyectos[key].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
+                tareaTarjeta.appendChild(vencimiento);
 
                 const botonVerEditar = document.createElement("button");
                 botonVerEditar.setAttribute("data-proyecto", `${key}`);
@@ -147,10 +153,8 @@ function domMostrarTareasHoy() {
                 botonVerEditar.classList.add("botonVerEditar");
                 botonVerEditar.textContent = "Ver detalles / Editar";
                 botonVerEditar.addEventListener("click", llamarVerEditar);
-
-                tareaTarjeta.appendChild(tituloH3);
-                tareaTarjeta.appendChild(vencimiento);   
                 tareaTarjeta.appendChild(botonVerEditar);
+                
                 main.appendChild(tareaTarjeta);
                 
                 const cuerpi = document.querySelector('body');
@@ -201,12 +205,18 @@ function domMostrarTareasSemana() {
                     tareaTarjeta.classList.add("prioridadBaja");
                 };
 
+                const proyectoH2 = document.createElement('h2');
+                proyectoH2.textContent = `Del Proyecto: "${key}"`;
+                tareaTarjeta.appendChild(proyectoH2);
+
                 const tituloH3 = document.createElement("h3");
                 tituloH3.textContent = proyectos[key].tareas[i].titulo;
-                
+                tareaTarjeta.appendChild(tituloH3);
+
                 const vencimiento = document.createElement("div");
                 vencimiento.classList.add("vencimiento");
                 vencimiento.textContent = `Vence en: ${formatDistanceToNow(proyectos[key].tareas[i].vencimiento, {addSuffix: true, locale: es})}.`;
+                tareaTarjeta.appendChild(vencimiento);
 
                 const botonVerEditar = document.createElement("button");
                 botonVerEditar.setAttribute("data-proyecto", `${key}`);
@@ -215,10 +225,8 @@ function domMostrarTareasSemana() {
                 botonVerEditar.classList.add("botonVerEditar");
                 botonVerEditar.textContent = "Ver detalles / Editar";
                 botonVerEditar.addEventListener("click", llamarVerEditar);
-
-                tareaTarjeta.appendChild(tituloH3);
-                tareaTarjeta.appendChild(vencimiento);   
                 tareaTarjeta.appendChild(botonVerEditar);
+                
                 main.appendChild(tareaTarjeta);
                 
                 const cuerpi = document.querySelector('body');
@@ -337,7 +345,7 @@ function domMostrarTareas(proyectoElegido) {
 };
 
 function domCrearTarea(proyectoElegido) {
-    crearTarea(proyectoElegido,"", "", new Date(), "", "", "");
+    crearTarea(proyectoElegido,"", "", new Date(), "", "", {});
     domMostrarTareas(proyectoElegido);
     const numeroTarea = proyectos[proyectoElegido].tareas.length - 1; 
     domVerEditar(proyectoElegido, numeroTarea);
@@ -413,6 +421,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     function agregarVerificaciones() {
         const tituloVerificaciones = document.createElement('div');
         tituloVerificaciones.textContent = 'Lista de Verificación:';
+        tituloVerificaciones.classList.add('tituloVerificaciones');
         divVerificaciones.appendChild(tituloVerificaciones);
 
         const botonAgregarUnaVerificacion = document.createElement('button');
@@ -566,12 +575,24 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     textAreaNotas.value = proyectos[proyectoElegido].tareas[numeroTarea].notas;
     formulario.appendChild(textAreaNotas);
 
+    // Lista de Verificación:
     const divVerificaciones = document.createElement('div');
     divVerificaciones.classList.add('divVerificaciones');
     formulario.appendChild(divVerificaciones);
-
-    if (proyectos[proyectoElegido].tareas[numeroTarea].checklist !== {}) {
+    
+    if ((Object.keys(proyectos[proyectoElegido].tareas[numeroTarea].checklist)).length) {
         
+        const tituloVerificaciones = document.createElement('div');
+        tituloVerificaciones.textContent = 'Lista de Verificación:';
+        tituloVerificaciones.classList.add('tituloVerificaciones');
+        divVerificaciones.appendChild(tituloVerificaciones);
+        
+        const botonAgregarUnaVerificacion = document.createElement('button');
+        botonAgregarUnaVerificacion.classList.add('agregarVerificación');
+        botonAgregarUnaVerificacion.textContent = 'Agregar Verificación';
+        botonAgregarUnaVerificacion.addEventListener('click', agregarUnaVerificacion);
+        divVerificaciones.appendChild(botonAgregarUnaVerificacion);
+
         let numeroVerificacion = 0;
         
         for (const key of Object.keys(proyectos[proyectoElegido].tareas[numeroTarea].checklist)) {
@@ -583,14 +604,16 @@ function domVerEditar(proyectoElegido, numeroTarea) {
             nuevaVerificacion.classList.add('checkVerificacion');
             nuevaVerificacion.classList.add(`verificacion${numeroVerificacion}`);
             nuevaVerificacion.checked = proyectos[proyectoElegido].tareas[numeroTarea].checklist[key];
-            divVerificaciones.appendChild(nuevaVerificacion);
+            divUnaVerificacion.appendChild(nuevaVerificacion);
 
             const textoVerificacion = document.createElement('input');
             textoVerificacion.setAttribute('type', 'text');
             textoVerificacion.classList.add('verificacion');
             textoVerificacion.classList.add(`verificacion${numeroVerificacion}`);
             textoVerificacion.value = key;
-            divVerificaciones.appendChild(textoVerificacion);
+            divUnaVerificacion.appendChild(textoVerificacion);
+
+            divVerificaciones.appendChild(divUnaVerificacion);
 
             numeroVerificacion += 1;
         };
@@ -608,11 +631,13 @@ function domVerEditar(proyectoElegido, numeroTarea) {
     botonGuardarCambios.addEventListener("click", llamarActualizarTarea);
     comandoFormulario.appendChild(botonGuardarCambios);
 
-    const botonAgregarVerificaciones = document.createElement('button');
-    botonAgregarVerificaciones.classList.add('agregarVerificaciones');
-    botonAgregarVerificaciones.textContent = 'Agregar Lista de Verificación';
-    botonAgregarVerificaciones.addEventListener('click', agregarVerificaciones);
-    comandoFormulario.appendChild(botonAgregarVerificaciones);
+    if (!(Object.keys(proyectos[proyectoElegido].tareas[numeroTarea].checklist)).length) {
+        const botonAgregarVerificaciones = document.createElement('button');
+        botonAgregarVerificaciones.classList.add('agregarVerificaciones');
+        botonAgregarVerificaciones.textContent = 'Agregar Lista de Verificación';
+        botonAgregarVerificaciones.addEventListener('click', agregarVerificaciones);
+        comandoFormulario.appendChild(botonAgregarVerificaciones);
+    };
 
     const botonEliminarTarea = document.createElement("button");
     botonEliminarTarea.classList.add('eliminarTarea');
