@@ -425,7 +425,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         divVerificaciones.appendChild(tituloVerificaciones);
 
         const botonAgregarUnaVerificacion = document.createElement('button');
-        botonAgregarUnaVerificacion.classList.add('agregarVerificación');
+        botonAgregarUnaVerificacion.classList.add('agregarVerificacion');
         botonAgregarUnaVerificacion.textContent = 'Agregar Verificación';
         botonAgregarUnaVerificacion.addEventListener('click', agregarUnaVerificacion);
         divVerificaciones.appendChild(botonAgregarUnaVerificacion);        
@@ -488,6 +488,8 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const inputRadioAlta = document.createElement("input");
     inputRadioAlta.setAttribute("type", "radio");
+    // Este 'name' es para q el navegador sepa q son de la tarea numeroTarea.
+    inputRadioAlta.setAttribute('name', `prioridad${numeroTarea}`);
     inputRadioAlta.setAttribute("id", "alta");
     inputRadioAlta.setAttribute("value", "alta");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Alta") {
@@ -504,6 +506,8 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const inputRadioMediana = document.createElement("input");
     inputRadioMediana.setAttribute("type", "radio");
+    // Este 'name' es para q el navegador sepa q son de la tarea numeroTarea.
+    inputRadioMediana.setAttribute('name', `prioridad${numeroTarea}`);
     inputRadioMediana.setAttribute("id", "mediana");
     inputRadioMediana.setAttribute("value", "mediana");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Mediana") {
@@ -520,6 +524,8 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
     const inputRadioBaja = document.createElement("input");
     inputRadioBaja.setAttribute("type", "radio");
+    // Este 'name' es para q el navegador sepa q son de la tarea numeroTarea.
+    inputRadioBaja.setAttribute('name', `prioridad${numeroTarea}`);
     inputRadioBaja.setAttribute("id", "baja");
     inputRadioBaja.setAttribute("value", "baja");
     if (proyectos[proyectoElegido].tareas[numeroTarea].prioridad === "Baja") {
@@ -588,7 +594,7 @@ function domVerEditar(proyectoElegido, numeroTarea) {
         divVerificaciones.appendChild(tituloVerificaciones);
         
         const botonAgregarUnaVerificacion = document.createElement('button');
-        botonAgregarUnaVerificacion.classList.add('agregarVerificación');
+        botonAgregarUnaVerificacion.classList.add('agregarVerificacion');
         botonAgregarUnaVerificacion.textContent = 'Agregar Verificación';
         botonAgregarUnaVerificacion.addEventListener('click', agregarUnaVerificacion);
         divVerificaciones.appendChild(botonAgregarUnaVerificacion);

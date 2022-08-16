@@ -310,8 +310,6 @@ main .formularioVerEditar {
 main .formularioVerEditar .labelTitulo {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
-
-    font-weight: bold;
 }
 
 main .formularioVerEditar #titulo {
@@ -343,12 +341,6 @@ main .formularioVerEditar .fieldsetPrioridad {
 
     margin-top: 1rem;
     margin-bottom: 1rem;
-
-    font-weight: bold;
-}
-
-main .formularioVerEditar .leyendaPrioridad {
-    font-weight: bold;
 }
 
 main .formularioVerEditar .divVencimiento {
@@ -361,8 +353,6 @@ main .formularioVerEditar .divVencimiento {
 
 main .formularioVerEditar .labelVencimiento {
     margin: 1rem;
-
-    font-weight: bold;
 }
 
 main .formularioVerEditar #vencimiento {
@@ -385,8 +375,6 @@ main .formularioVerEditar .labelDescripcion {
 
     margin-top: 1rem;
     margin-bottom: 1rem;
-
-    font-weight: bold;
 }
 
 main .formularioVerEditar #descripcion {
@@ -412,8 +400,6 @@ main .formularioVerEditar .labelNotas {
 
     margin-top: 1rem;
     margin-bottom: 1rem;
-
-    font-weight: bold;
 }
 
 main .formularioVerEditar #notas {
@@ -438,19 +424,46 @@ main .formularioVerEditar .divVerificaciones {
     grid-row: 5 / 6;
 }
 
-main .formularioVerEditar .divVerificaciones {
-    
+main .formularioVerEditar .divVerificaciones button.agregarVerificacion {
+    margin: 0.5rem;
+    padding: 0.5rem;
+
+    border-radius: 1rem;
+    border-color: var(--violeta-muy-oscuro);
+
+    background-color: var(--violeta);
+    color: var(--violeta-muy-suave);
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+main .formularioVerEditar .divVerificaciones button.agregarVerificacion:hover {
+    box-shadow: 0 0 1rem var(--violeta);
+}
+
+main .formularioVerEditar .divVerificaciones input[type="text"] {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border-style: none;
+    background-color: var(--violeta-muy-suave);
+    color: var(--violeta);
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 main .comandoFormulario {
     display: flex;
     justify-content: space-evenly;
+
+    margin: 0.5rem;
 }
 
 main .comandoFormulario .guardarCambios {
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 2rem;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -461,6 +474,7 @@ main .comandoFormulario .agregarVerificaciones {
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 2rem;
+    border-color: var(--violeta-muy-oscuro);
     background-color: green;
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -471,6 +485,7 @@ main .comandoFormulario .eliminarTarea {
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 2rem;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja-oscuro);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -478,7 +493,8 @@ main .comandoFormulario .eliminarTarea {
 }
 
 main .comandoFormulario .guardarCambios:hover,
-main .comandoFormulario .eliminarTarea:hover {
+main .comandoFormulario .eliminarTarea:hover,
+main .comandoFormulario .agregarVerificaciones {
     box-shadow: 0 0 1rem var(--violeta);
 }
 
