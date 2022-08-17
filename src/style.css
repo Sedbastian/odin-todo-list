@@ -118,7 +118,10 @@ nav .proyectos .comandoProyectos {
 nav .proyectos .comandoProyectos .proyectoNuevo {
     margin-bottom: .5rem;
     padding: 0.5rem;
+
     border-radius: 3rem;
+    border-style: solid;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -127,7 +130,10 @@ nav .proyectos .comandoProyectos .proyectoNuevo {
 
 nav .proyectos .comandoProyectos .eliminarTodo {
     padding: 0.5rem;
+
     border-radius: 3rem;
+    border-style: solid;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja-oscuro);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -187,6 +193,8 @@ nav .proyectos .comandoProyectos .eliminarTodo {
     margin-bottom: 0;
     padding: 0.5rem;
     border-radius: 3rem;
+    border-style: solid;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -197,6 +205,8 @@ nav .proyectos .comandoProyectos .eliminarTodo {
     margin: 1rem;
     padding: 0.5rem;
     border-radius: 3rem;
+    border-style: solid;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja-oscuro);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -213,6 +223,8 @@ main {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
 
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
     box-shadow: 0 0 1rem rgb(0, 0, 0);
     border-radius: 1rem;
     background-color: var(--violeta-muy-suave);
@@ -246,6 +258,8 @@ main .comandoTareas .eliminarProyecto {
     margin: 1rem;
     padding: 0.5rem;
     border-radius: 2rem;
+    border-style: solid;
+    border-color: var(--violeta-muy-oscuro);
     background-color: var(--naranja-oscuro);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
@@ -262,6 +276,7 @@ main .tareaTarjeta {
     border-style: solid;
     border-radius: 1rem;
     border-color: var(--violeta-muy-oscuro);
+    box-shadow: 0 0 1rem var(--violeta);
     color: var(--violeta-muy-oscuro);
     font-weight: bold;
 }
@@ -270,6 +285,7 @@ main .botonVerEditar {
     margin-top: 0.5rem;
 
     border-radius: 1rem;
+    border-style: solid;
     border-color: var(--violeta-muy-oscuro);
 
     background-color: var(--violeta);
@@ -507,10 +523,16 @@ main .botonCrearTarea {
     margin: 1rem;
     padding: 0.5rem;
     border-radius: 2rem;
+    border-style: solid;
+    border-color: var(--violeta);
     background-color: var(--naranja);
     color: var(--violeta-muy-oscuro);
     font-size: 1rem;
     font-weight: bold;
+}
+
+main .botonCrearTarea:hover {
+    box-shadow: 0 0 1rem var(--violeta);
 }
 
 /* FOOTER */
