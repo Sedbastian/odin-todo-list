@@ -3,6 +3,7 @@ import { format, formatDistanceToNow, add } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 function domNavProyectos(proyectoElegido) {
+	
 	function llamarMostrarTareas(event) {
 		const proyectoAmostrarTareas = event.target.textContent;
 		domMostrarTareas(proyectoAmostrarTareas);
@@ -28,17 +29,27 @@ function domNavProyectos(proyectoElegido) {
 }
 
 function domCrearProyecto() {
-	function llamarCrearProyecto() {
+	
+	function llamarCrearProyecto(event) {
 		const titulo = `${inputTitulo.value}`;
 		const descripcion = `${inputDescripcion.value}`;
 		crearProyecto(titulo, descripcion);
-		cuerpi.removeChild(divBlured);
-		domNavProyectos(titulo);
-		domMostrarTareas(titulo);
+
+		event.target.classList.add('hecho');
+		event.target.addEventListener('transitionend', event => {
+			event.target.classList.remove('hecho');
+			cuerpi.removeChild(divBlured);
+			domNavProyectos(titulo);
+			domMostrarTareas(titulo);
+		});
 	}
 
-	function cancelarFormulario() {
+	function cancelarFormulario(event) {
+		event.target.classList.add('hecho');
+		event.target.addEventListener('transitionend', event => {
+		event.target.classList.remove('hecho');
 		cuerpi.removeChild(divBlured);
+		});
 	}
 
 	const divFormulario = document.createElement('div');
@@ -392,7 +403,10 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 			domMostrarTareasHoy();
 		} else if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'semana') {
 			domMostrarTareasSemana();
-		} else { /* domMostrarTareas(proyectoElegido); */ }
+		}
+
+		event.target.classList.remove('hecho');
+		event.target.classList.add('hecho');
 	}
 
 	let numeroVerificacion = 0;
@@ -654,6 +668,8 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 
 	tarjetaAeditar.appendChild(formulario);
 	tarjetaAeditar.appendChild(comandoFormulario);
+
+	textAreaNotas.style.height = `${textAreaNotas.scrollHeight}px`;
 }
 
 export {

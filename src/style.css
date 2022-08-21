@@ -1,547 +1,590 @@
 @font-face {
-    font-family: "Raleway-Medium";
-    src: url("./Raleway-VariableFont_wght.ttf") format('truetype');
+	font-family: "Raleway-Medium";
+	src: url("./Raleway-VariableFont_wght.ttf") format('truetype');
 }
 
 :root {
-    --violeta-muy-oscuro: rgb(40, 0, 75);
-    --violeta-oscuro: rgb(50, 0, 100);
-    --violeta: rgb(64, 0, 128);
-    --violeta-suave: rgb(128, 0, 255);
-    --violeta-muy-suave: rgb(192, 128, 255);
-    --violeta-casi-blanco: rgb(229, 204, 254);
+	--violeta-muy-oscuro: rgb(40, 0, 75);
+	--violeta-oscuro: rgb(50, 0, 100);
+	--violeta: rgb(64, 0, 128);
+	--violeta-suave: rgb(128, 0, 255);
+	--violeta-muy-suave: rgb(192, 128, 255);
+	--violeta-casi-blanco: rgb(229, 204, 254);
 
-    --naranja: rgb(255, 128, 0);
-    --naranja-oscuro: rgb(255, 60, 0);
-
+	--naranja: rgb(255, 128, 0);
+	--naranja-oscuro: rgb(255, 60, 0);
 }
 
 * {
-    font-family: "Raleway-Medium";
+	font-family: "Raleway-Medium";
 }
 
 body {
-    display: grid;
+	display: grid;
 
-    margin: 0;
-    padding: 0;
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: min-content, 1fr, min-content;
+	margin: 0;
+	padding: 0;
+	grid-template-columns: max-content 1fr;
+	grid-template-rows: min-content 1fr min-content;
 
-    background-color: var(--violeta);
+	background-color: var(--violeta);
+}
+
+@keyframes marcosclave {
+	from {
+		opacity: 0.5;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 h1 {
-    grid-column: 1 / 3;
-    grid-row: 1 / 2;
+	grid-column: 1 / 3;
+	grid-row: 1 / 2;
 
-    margin: 0;
-    padding: 1rem;
-    text-align: center;
-    background-color: var(--violeta);
-    color: var(--naranja);
+	margin: 0;
+	padding: 1rem;
+	text-align: center;
+	background-color: var(--violeta);
+	color: var(--naranja);
+	text-shadow: 0 0 0.5rem var(--violeta-suave);
+
+	animation: marcosclave 2s linear 0s infinite alternate;
 }
 
 /* NAV */
 nav {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+	grid-column: 1 / 2;
+	grid-row: 2 / 3;
 
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: min-content min-content min-content;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: min-content min-content min-content;
 
-    padding: 1rem;
-    background-color: var(--violeta);
-    font-size: 2rem;
-    color: var(--violeta-casi-blanco);
+	padding: 1rem;
+	background-color: var(--violeta);
+	font-size: 2rem;
+	color: var(--violeta-casi-blanco);
 }
 
 nav .tareasSueltas {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
 
-    margin-bottom: 2rem;
-    padding: 1rem;
-    border-radius: 1rem;
+	margin-bottom: 2rem;
+	padding: 1rem;
+	border-radius: 1rem;
+}
+nav .tareasSueltas:hover {
+	background-color: var(--violeta-muy-suave);
+	color: var(--violeta);
 }
 
 nav .porVencimiento {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    
-    /* border-top-style: dotted;
-    border-color: violet; */
+	grid-column: 1 / 2;
+	grid-row: 2 / 3;
+}
+
+nav .porVencimiento :hover {
+	background-color: var(--violeta-muy-suave);
+	color: var(--violeta);
 }
 
 nav .porVencimiento > div {
-    padding: 1rem;
-    border-radius: 1rem;
+	padding: 1rem;
+	border-radius: 1rem;
 }
 
 nav .proyectos {
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
+	grid-column: 1 / 2;
+	grid-row: 3 / 4;
 
-    margin-top: 3rem;
-    padding: 1rem;
-    border-radius: 1rem;
+	margin-top: 3rem;
+	padding: 1rem;
+	border-radius: 1rem;
 
-    background-color: var(--violeta-oscuro);
+	background-color: var(--violeta-oscuro);
 }
 
 nav .proyectoNav {
-    padding: 1rem;
-    border-radius: 1rem;
+	padding: 1rem;
+	border-radius: 1rem;
 
-    color: var(--violeta-muy-suave);
+	color: var(--violeta-muy-suave);
+}
+
+nav .proyectoNav:hover {
+	background-color: var(--violeta-muy-suave);
+	color: var(--violeta);
 }
 
 nav .proyectoElegido {
-    background-color: var(--violeta-suave);
-    color: var(--violeta-casi-blanco);
+	background-color: var(--violeta-suave);
+	color: var(--violeta-muy-oscuro);
+	font-weight: bold;
 }
 
 nav .proyectos .tituloProyectos {
-    margin-bottom: 1rem;
-    font-weight: bold;
+	margin-bottom: 1rem;
+	font-weight: bold;
 }
 
 nav .proyectos .comandoProyectos {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border-radius: 1rem;
-    background-color: var(--violeta-muy-oscuro);
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	border-radius: 1rem;
+	background-color: var(--violeta-muy-oscuro);
 }
 
 nav .proyectos .comandoProyectos .proyectoNuevo {
-    margin-bottom: .5rem;
-    padding: 0.5rem;
+	margin-bottom: .5rem;
+	padding: 0.5rem;
 
-    border-radius: 3rem;
-    border-style: solid;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	border-radius: 3rem;
+	border-style: solid;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
+	transition: box-shadow 0.5s;
 }
 
 nav .proyectos .comandoProyectos .eliminarTodo {
-    padding: 0.5rem;
+	padding: 0.5rem;
 
-    border-radius: 3rem;
-    border-style: solid;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja-oscuro);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	border-radius: 3rem;
+	border-style: solid;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja-oscuro);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
+	transition: box-shadow 0.5s;
 }
 
 .proyectoNuevo:hover,
 .eliminarTodo:hover {
-    box-shadow: 0 0 1rem var(--violeta-casi-blanco);
+	box-shadow: 0 0 1rem var(--violeta-casi-blanco);
+}
+
+.proyectoNuevo.mousedown,
+.eliminarTodo.mousedown {
+	box-shadow: 0 0 10rem var(--violeta-casi-blanco);
 }
 
 .divBlured {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(5px);
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0);
+	backdrop-filter: blur(5px);
 }
 
 .divFormularioProyecto {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 
-    display: grid;
-    grid-template-columns: 1fr;
-    
-    gap: 1rem;
-    padding: 2rem;
-    
-    background-color: var(--violeta-muy-oscuro);
-    border-style: solid;
-    border-radius: 1rem;
-    border-color: var(--naranja);
-    border-width: 0.3rem;
-    
-    color: var(--violeta-muy-suave);
-    font-weight: bold;
+	display: grid;
+	grid-template-columns: 1fr;
+	
+	gap: 1rem;
+	padding: 2rem;
+	
+	background-color: var(--violeta-muy-oscuro);
+	border-style: solid;
+	border-radius: 1rem;
+	border-color: var(--naranja);
+	border-width: 0.3rem;
+	
+	color: var(--violeta-muy-suave);
+	font-weight: bold;
 }
 
 .divFormularioProyecto input {
-    padding: 0.5rem;
-    border-style: none;
-    border-radius: 1rem;
-    background-color: var(--violeta);
-    color: var(--violeta-casi-blanco);
-    font-weight: bold;
-    font-size: 1.5rem;
+	padding: 0.5rem;
+	border-style: none;
+	border-radius: 1rem;
+	background-color: var(--violeta);
+	color: var(--violeta-casi-blanco);
+	font-weight: bold;
+	font-size: 1.5rem;
 }
 
 .divFormularioProyecto .botonCrearProyecto {
-    margin: 1rem;
-    margin-bottom: 0;
-    padding: 0.5rem;
-    border-radius: 3rem;
-    border-style: solid;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 1rem;
+	margin-bottom: 0;
+	padding: 0.5rem;
+	border-radius: 3rem;
+	border-style: solid;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
+	transition: box-shadow 1s, transform 1s;
 }
 
 .divFormularioProyecto .botonCancelar {
-    margin: 1rem;
-    padding: 0.5rem;
-    border-radius: 3rem;
-    border-style: solid;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja-oscuro);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 1rem;
+	padding: 0.5rem;
+	border-radius: 3rem;
+	border-style: solid;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja-oscuro);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
+	transition: box-shadow 1s, transform 1s;
 }
 
 .divFormularioProyecto .botonCrearProyecto:hover,
 .divFormularioProyecto .botonCancelar:hover {
-    box-shadow: 0 0 1rem var(--violeta-casi-blanco);
+	box-shadow: 0 0 1rem var(--violeta-casi-blanco);
+}
+
+.divFormularioProyecto .botonCrearProyecto.hecho,
+.divFormularioProyecto .botonCancelar.hecho {
+	transform: rotate(360deg);
 }
 
 /* MAIN */
 main {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
+	grid-column: 2 / 3;
+	grid-row: 2 / 3;
 
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    box-shadow: 0 0 1rem rgb(0, 0, 0);
-    border-radius: 1rem;
-    background-color: var(--violeta-muy-suave);
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+	box-shadow: 0 0 1rem rgb(0, 0, 0);
+	border-radius: 1rem;
+	background-color: var(--violeta-muy-suave);
 }
 
 main .comandoTareas {
-    display: grid;
-    grid-template-columns: 1fr max-content;
-    grid-template-rows: 1fr;
+	display: grid;
+	grid-template-columns: 1fr max-content;
+	grid-template-rows: 1fr;
 
-    margin: 0;
-    padding: 1rem;
+	margin: 0;
+	padding: 1rem;
 
-    border-radius: 1rem;
-    background-color: var(--violeta-muy-suave);
-    
-    color: var(--violeta);
-    font-weight: 300;
+	border-radius: 1rem;
+	background-color: var(--violeta-muy-suave);
+	
+	color: var(--violeta);
+	font-weight: 300;
 }
 
 main .comandoTareas h2 {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
 }
 
 main .comandoTareas .eliminarProyecto {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    align-self: center;
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+	align-self: center;
 
-    margin: 1rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
-    border-style: solid;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja-oscuro);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 1rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
+	border-style: solid;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja-oscuro);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .comandoTareas .eliminarProyecto:hover {
-    box-shadow: 0 0 1rem var(--violeta);
+	box-shadow: 0 0 1rem var(--violeta);
 }
 
 main .tareaTarjeta {
-    margin: 1rem;
-    padding: .5rem;
-    border-style: solid;
-    border-radius: 1rem;
-    border-color: var(--violeta-muy-oscuro);
-    box-shadow: 0 0 1rem var(--violeta);
-    color: var(--violeta-muy-oscuro);
-    font-weight: bold;
+	margin: 1rem;
+	padding: .5rem;
+	border-style: solid;
+	border-radius: 1rem;
+	border-color: var(--violeta-muy-oscuro);
+	box-shadow: 0 0 1rem var(--violeta);
+	color: var(--violeta-muy-oscuro);
+	font-weight: bold;
 }
 
 main .botonVerEditar {
-    margin-top: 0.5rem;
+	margin-top: 0.5rem;
 
-    border-radius: 1rem;
-    border-style: solid;
-    border-color: var(--violeta-muy-oscuro);
+	border-radius: 1rem;
+	border-style: solid;
+	border-color: var(--violeta-muy-oscuro);
 
-    background-color: var(--violeta);
-    color: var(--violeta-casi-blanco);
-    font-weight: bold;
+	background-color: var(--violeta);
+	color: var(--violeta-casi-blanco);
+	font-weight: bold;
 }
 
 main .botonVerEditar:hover {
-    box-shadow: 0 0 1rem var(--violeta-casi-blanco);
+	box-shadow: 0 0 1rem var(--violeta-casi-blanco);
 }
 
 main .tareaTarjeta h3 {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 main .tareaTarjeta.prioridadAlta {
-    background-color: var(--naranja-oscuro);
+	background-color: var(--naranja-oscuro);
 }
 
 main .tareaTarjeta.prioridadMediana {
-    background-color: var(--naranja);
+	background-color: var(--naranja);
 }
 
 main .tareaTarjeta.prioridadBaja {
-    background-color: green;
+	background-color: green;
 }
 
 /* FORMULARIO VER EDITAR */
 
 main .formularioVerEditar {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-template-rows: repeat (5, max-content );
+	display: grid;
+	grid-template-columns: min-content 1fr;
+	grid-template-rows: repeat (5, max-content);
 
-    font-size: 1.3rem;
+	font-size: 1.3rem;
 }
 
 main .formularioVerEditar .labelTitulo {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
 }
 
 main .formularioVerEditar #titulo {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
 
-    margin-left: 1rem;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border-style: none;
-    background-color: var(--violeta);
-    color: var(--violeta-muy-suave);
-    font-size: 1rem;
-    font-weight: bold;
+	margin-left: 1rem;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	border-style: none;
+	background-color: var(--violeta);
+	color: var(--violeta-muy-suave);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .formularioVerEditar .divPrioridadVencimiento {
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
+	grid-column: 1 / 3;
+	grid-row: 2 / 3;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-items: center;
+	align-items: center;
 }
 
 main .formularioVerEditar .fieldsetPrioridad {
-    grid-column: 1 / 2;
+	grid-column: 1 / 2;
 
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 main .formularioVerEditar .divVencimiento {
-    grid-column: 2 / 3;
-    justify-self: start;
-    
-    display: flex;
-    flex-direction: column;
+	grid-column: 2 / 3;
+	justify-self: start;
+	
+	display: flex;
+	flex-direction: column;
 }
 
 main .formularioVerEditar .labelVencimiento {
-    margin: 1rem;
+	margin: 1rem;
 }
 
 main .formularioVerEditar #vencimiento {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	margin-left: 1rem;
 
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border-style: none;
-    background-color: var(--violeta);
-    color: var(--violeta-muy-suave);
-    font-size: 1rem;
-    font-weight: bold;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	border-style: none;
+	background-color: var(--violeta);
+	color: var(--violeta-muy-suave);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .formularioVerEditar .labelDescripcion {
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
+	grid-column: 1 / 2;
+	grid-row: 3 / 4;
 
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 main .formularioVerEditar #descripcion {
-    grid-column: 2 / 3;
-    grid-row: 3 / 4;
+	grid-column: 2 / 3;
+	grid-row: 3 / 4;
 
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	margin-left: 1rem;
 
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border-style: none;
-    background-color: var(--violeta);
-    color: var(--violeta-muy-suave);
-    font-size: 1rem;
-    font-weight: bold;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	border-style: none;
+	background-color: var(--violeta);
+	color: var(--violeta-muy-suave);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .formularioVerEditar .labelNotas {
-    grid-column: 1 / 2;
-    grid-row: 4 / 5;
+	grid-column: 1 / 2;
+	grid-row: 4 / 5;
 
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 main .formularioVerEditar #notas {
-    grid-column: 2 / 3;
-    grid-row: 4 / 5;
+	grid-column: 2 / 3;
+	grid-row: 4 / 5;
 
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	margin-left: 1rem;
 
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border-style: none;
-    background-color: var(--violeta);
-    color: var(--violeta-muy-suave);
-    font-size: 1rem;
-    font-weight: bold;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	border-style: none;
+	background-color: var(--violeta);
+	color: var(--violeta-muy-suave);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .formularioVerEditar .divVerificaciones {
-    grid-column: 1 / 3;
-    grid-row: 5 / 6;
+	grid-column: 1 / 3;
+	grid-row: 5 / 6;
 }
 
 main .formularioVerEditar .divVerificaciones button.agregarVerificacion {
-    margin: 0.5rem;
-    padding: 0.5rem;
+	margin: 0.5rem;
+	padding: 0.5rem;
 
-    border-radius: 1rem;
-    border-color: var(--violeta-muy-oscuro);
+	border-radius: 1rem;
+	border-color: var(--violeta-muy-oscuro);
 
-    background-color: var(--violeta);
-    color: var(--violeta-muy-suave);
-    font-size: 1rem;
-    font-weight: bold;
+	background-color: var(--violeta);
+	color: var(--violeta-muy-suave);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .formularioVerEditar .divVerificaciones button.agregarVerificacion:hover {
-    box-shadow: 0 0 1rem var(--violeta);
+	box-shadow: 0 0 1rem var(--violeta);
 }
 
 main .formularioVerEditar .divVerificaciones input[type="text"] {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    border-style: none;
-    background-color: var(--violeta-muy-suave);
-    color: var(--violeta);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border-radius: 1rem;
+	border-style: none;
+	background-color: var(--violeta-muy-suave);
+	color: var(--violeta);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .comandoFormulario {
-    display: flex;
-    justify-content: space-evenly;
+	display: flex;
+	justify-content: space-evenly;
 
-    margin: 0.5rem;
+	margin: 0.5rem;
 }
 
 main .comandoFormulario .guardarCambios {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
+
+	transition: transform 1s;
+}
+
+main .comandoFormulario .guardarCambios.hecho {
+	transform: rotate(360deg);
 }
 
 main .comandoFormulario .agregarVerificaciones {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: green;
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: green;
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .comandoFormulario .eliminarTarea {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
-    border-color: var(--violeta-muy-oscuro);
-    background-color: var(--naranja-oscuro);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	margin: 0.5rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
+	border-color: var(--violeta-muy-oscuro);
+	background-color: var(--naranja-oscuro);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .comandoFormulario .guardarCambios:hover,
 main .comandoFormulario .eliminarTarea:hover,
-main .comandoFormulario .agregarVerificaciones {
-    box-shadow: 0 0 1rem var(--violeta);
+main .comandoFormulario .agregarVerificaciones:hover {
+	box-shadow: 0 0 1rem var(--violeta);
 }
 
 /* FIN FORMULARIO VER EDITAR */
 
 main .botonCrearTarea {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    
-    margin: 1rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
-    border-style: solid;
-    border-color: var(--violeta);
-    background-color: var(--naranja);
-    color: var(--violeta-muy-oscuro);
-    font-size: 1rem;
-    font-weight: bold;
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+	
+	margin: 1rem;
+	padding: 0.5rem;
+	border-radius: 2rem;
+	border-style: solid;
+	border-color: var(--violeta);
+	background-color: var(--naranja);
+	color: var(--violeta-muy-oscuro);
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 main .botonCrearTarea:hover {
-    box-shadow: 0 0 1rem var(--violeta);
+	box-shadow: 0 0 1rem var(--violeta);
 }
 
 /* FOOTER */
 
 footer {
-    grid-column: 1 / 3;
-    grid-row: 3 / 4;
+	grid-column: 1 / 3;
+	grid-row: 3 / 4;
 
-    margin: 0;
-    background-color: #666666;
-    text-align: center;
+	margin: 0;
+	background-color: #666666;
+	text-align: center;
 }

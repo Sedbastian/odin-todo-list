@@ -78,8 +78,24 @@ function iniciar() {
 	document.querySelector('.tareasSueltas').addEventListener('click', domMostrarTareasSueltas);
 	document.querySelector('.hoy').addEventListener('click', domMostrarTareasHoy);
 	document.querySelector('.semana').addEventListener('click', domMostrarTareasSemana);
-	document.querySelector('.proyectoNuevo').addEventListener('click', domCrearProyecto);
-	document.querySelector('.eliminarTodo').addEventListener('click', eliminarProyectosGuardados);
+
+	const proyectoNuevo = document.querySelector('.proyectoNuevo');
+	proyectoNuevo.addEventListener('click', domCrearProyecto);
+	proyectoNuevo.addEventListener('mousedown', event => {
+		event.target.classList.add('mousedown');
+	});
+	proyectoNuevo.addEventListener('transitionend', event => {
+		event.target.classList.remove('mousedown');
+	});
+
+	const eliminarTodo = document.querySelector('.eliminarTodo');
+	eliminarTodo.addEventListener('click', eliminarProyectosGuardados);
+	eliminarTodo.addEventListener('mousedown', event => {
+		event.target.classList.add('mousedown');
+	});
+	eliminarTodo.addEventListener('transitionend', event => {
+		event.target.classList.remove('mousedown');
+	});
     
 	cargarProyectos();
 	if (!proyectos['Tareas Sueltas']) {
