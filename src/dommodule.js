@@ -399,11 +399,12 @@ function domVerEditar(proyectoElegido, numeroTarea) {
 		}
 
 		actualizarTarea(proyectoElegido, numeroTarea, inputTitulo.value, textAreaDescripcion.value, new Date(inputDateVencimiento.value+'T00:00:00'), prioridad, textAreaNotas.value, checklistA);
+		
 		if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'hoy') {
 			domMostrarTareasHoy();
 		} else if (tarjetaAeditar.getAttribute('data-porVencimiento') === 'semana') {
 			domMostrarTareasSemana();
-		}
+		};
 
 		event.target.classList.remove('hecho');
 		event.target.classList.add('hecho');
