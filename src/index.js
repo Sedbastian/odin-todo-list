@@ -136,8 +136,8 @@ function eliminarProyectosGuardados() {
   }
 }
 
-async function cargarProyectos() {
-  
+async function cargarProyectosDesdeArchivo() {
+
 }
 
 async function exportarProyectos() {
