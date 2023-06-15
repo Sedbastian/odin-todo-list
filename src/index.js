@@ -8,7 +8,6 @@ import {
 } from "./dommodule.js";
 import { parseISO } from "date-fns";
 
-// Llamada por crearProyecto();
 function fabricarProyecto(titulo, descripcion) {
   const tareas = [];
   const fabricarTarea = function(
@@ -31,7 +30,6 @@ function fabricarProyecto(titulo, descripcion) {
   return { titulo, descripcion, tareas, fabricarTarea };
 }
 
-// Esta funcion es llamada por el eventListener del botón crearProyecto.
 function crearProyecto(titulo, descripcion) {
   const proyectoAagregar = fabricarProyecto(titulo, descripcion);
   proyectos[proyectoAagregar.titulo] = proyectoAagregar;
@@ -43,7 +41,6 @@ function eliminarProyecto(proyectoElegido) {
   guardarProyectos();
 }
 
-// Esta funcion es llamada por el eventListener del botón crearTarea.
 function crearTarea(
   proyecto,
   titulo,
@@ -64,7 +61,6 @@ function crearTarea(
   guardarProyectos();
 }
 
-// Esta funcion es llamada por el eventListener del botón guardarCambios.
 function actualizarTarea(
   proyecto,
   numeroTarea,
@@ -140,6 +136,10 @@ function eliminarProyectosGuardados() {
   }
 }
 
+async function cargarProyectos() {
+  
+}
+
 async function exportarProyectos() {
   async function getNewFileHandle() {
     const options = {
@@ -167,7 +167,7 @@ async function exportarProyectos() {
   }
 
   let proyectosGuardadosJSON;
-  if (await localStorage.getItem("proyectosGuardados")) {
+  if (localStorage.getItem("proyectosGuardados")) {
     proyectosGuardadosJSON = localStorage.getItem("proyectosGuardados");
   }
   const handle = await getNewFileHandle();
